@@ -1,0 +1,99 @@
+﻿<Window x:Class="_2DCollisionDetection.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:_2DCollisionDetection"
+        Title="2DCollisionTest" Height="520" Width="700" MinHeight="450" MinWidth="595">
+    <Grid Name="grdHolder">
+        <controls:ElementInfoControl x:Name="rectangleInfo" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0,0,0,19"/>
+        <TextBlock Name="lblMouseCords" Text="Mouse Cords" Margin="0,0,0,3" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+        <Rectangle Name="rctOne" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="142" Width="142" Margin="225.375,94,0,0" Stroke="Black" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="23"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Name="rctThree" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="46" Margin="237,276,0,0" Stroke="Black" VerticalAlignment="Top" Width="76" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-14.912"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Name="rctFour" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="146" Margin="375,254,0,0" Stroke="Black" VerticalAlignment="Top" Width="108" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Polygon Name="polyTriangle" Points="0,0 80,50, 0,100" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="Black" Fill="#FFF4F4F5"/>
+        <Polygon Name="polyOctagon" Points="0,25 25,0 50,0 75,25 75,50 50,75 25,75 0,50" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="Black" Fill="#FFF4F4F5"/>
+        <Rectangle Name="rctTwo"  Fill="AntiqueWhite" HorizontalAlignment="Left" Height="64" Width="142" Margin="51,172,0,0" Stroke="Black" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Name="rctTwo2"  Fill="AntiqueWhite" HorizontalAlignment="Left" Height="107" Width="142" Margin="435,111,0,0" Stroke="Black" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="15.495"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Name="rctTwo3"  Fill="AliceBlue" HorizontalAlignment="Left" Height="54" Width="167" Margin="94,353,0,0" Stroke="Black" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1.035" ScaleY="0.976"/>
+                    <SkewTransform AngleX="5.1" AngleY="6.003"/>
+                    <RotateTransform Angle="-10.366"/>
+                    <TranslateTransform X="12.243" Y="7.463"/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <TextBlock Name="txtCollision" FontSize="12" FontWeight="Bold" Text="Collision Object" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="56,209,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="#FFAC0000" Width="129" Height="22">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-9.633"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <TextBlock Name="txtCollision2" FontSize="12" FontWeight="Bold" Text="Collision Object" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="445,145,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.0,0.0" Foreground="#FFAC0000" Width="127" Height="22"/>
+        <TextBlock Name="txtCollision3" FontSize="12" FontWeight="Bold" Text="Collision Object" TextWrapping="Wrap" HorizontalAlignment="Left" TextAlignment="Center" Margin="120,376,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.495,0.532" Foreground="#FFAC0000" Height="34" Width="134">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-3.49"/>
+                    <TranslateTransform X="0.928" Y="-5.574"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <StackPanel HorizontalAlignment="Right" Width="212" Height="66" VerticalAlignment="Top">
+            <TextBlock Text="Instructions:" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#BF000000"/>
+            <TextBlock Text="-Drag collision objects." FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#BF000000"/>
+            <TextBlock Text="-Blue lines will show the 30 last collision points." TextWrapping="Wrap" FontSize="10" VerticalAlignment="Top" Foreground="#BF000000"/>
+        </StackPanel>
+        <TextBlock Text="Author: Fabrice Salomon" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,5,1" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>

@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="_2DCollisionDetection.ElementInfoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Width="142">
+    <Grid>
+        <StackPanel>
+            <TextBlock Name="lblName" Text="Name:" FontSize="12"/>
+            <TextBlock Name="lbl11" Text="11:" FontSize="12"/>
+            <TextBlock Name="lbl12" Text="12:" FontSize="12"/>
+            <TextBlock Name="lbl21" Text="21:" FontSize="12"/>
+            <TextBlock Name="lbl22" Text="22:" FontSize="12"/>
+            <TextBlock Name="lblHeight" Text="Height:" FontSize="12"/>
+            <TextBlock Name="lblWidth" Text="Width:" FontSize="12"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
