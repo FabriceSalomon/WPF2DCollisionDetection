@@ -1,4 +1,5 @@
-﻿using _2DCollisionLibrary.Geometry;
+﻿using _2DCollisionLibrary.Collision;
+using _2DCollisionLibrary.Geometry;
 using _2DCollisionLibrary.Points;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace _2DCollisionLibrary.Tracers
             if (!double.IsNaN(rayTraceCord.X) && !double.IsNaN(rayTraceCord.Y))
             {
                 if (RayLineCreated != null)
-                    RayLineCreated(rayTraceCord, rayTraceCord, "XYLine", Name);
+                    RayLineCreated(rayTraceCord, rayTraceCord, CollissionType.XYLine, Name);
                 return true;
             }
             return false;

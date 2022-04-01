@@ -1,4 +1,5 @@
-﻿using _2DCollisionLibrary.Geometry;
+﻿using _2DCollisionLibrary.Collision;
+using _2DCollisionLibrary.Geometry;
 using _2DCollisionLibrary.Helpers;
 using _2DCollisionLibrary.Points;
 using System;
@@ -15,7 +16,7 @@ namespace _2DCollisionLibrary.Tracers
         public string Name { get; set; }
         public Point StartPoint { get; set; }
         public Point EndPoint { get; set; }
-        public Action<Point, Point, string, string> RayLineCreated { get; set; }
+        public Action<Point, Point, CollissionType, string> RayLineCreated { get; set; }
 
         public Double Distance
         {

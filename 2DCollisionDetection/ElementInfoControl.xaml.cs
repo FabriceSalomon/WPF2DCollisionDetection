@@ -29,13 +29,13 @@ namespace _2DCollisionDetection
 
         public void UpdateData(string name, ViewGeometry viewGeometry)
         {
-            this.lblName.Text = "Name: " + name;
-            this.lbl11.Text = "11: X:" + viewGeometry.Geometry.Rect.TopLeft.X.ToString("0.0") + " Y:" + viewGeometry.Geometry.Rect.TopLeft.Y.ToString("0.0");
-            this.lbl12.Text = "12: X:" + viewGeometry.Geometry.Rect.TopRight.X.ToString("0.0") + " Y:" + viewGeometry.Geometry.Rect.TopRight.Y.ToString("0.0");
-            this.lbl21.Text = "21: X:" + viewGeometry.Geometry.Rect.BottomLeft.X.ToString("0.0") + " Y:" + viewGeometry.Geometry.Rect.BottomLeft.Y.ToString("0.0");
-            this.lbl22.Text = "22: X:" + viewGeometry.Geometry.Rect.BottomRight.X.ToString("0.0") + " Y:" + viewGeometry.Geometry.Rect.BottomRight.Y.ToString("0.0");
-            this.lblHeight.Text = "Height: " + viewGeometry.Geometry.Rect.Height.ToString("0.0");
-            this.lblWidth.Text = "Width: " + viewGeometry.Geometry.Rect.Width.ToString("0.0");
+            lblName.Text = "Name: " + name;
+            lbl11.Text = "11: X:" + viewGeometry.Geometry.Rect.TopLeft.X.ToString("0.0") + " Y:" + viewGeometry.Geometry.Rect.TopLeft.Y.ToString("0.0");
+            lbl12.Text = "12: X:" + viewGeometry.Geometry.Rect.TopRight.X.ToString("0.0") + " Y:" + viewGeometry.Geometry.Rect.TopRight.Y.ToString("0.0");
+            lbl21.Text = "21: X:" + viewGeometry.Geometry.Rect.BottomLeft.X.ToString("0.0") + " Y:" + viewGeometry.Geometry.Rect.BottomLeft.Y.ToString("0.0");
+            lbl22.Text = "22: X:" + viewGeometry.Geometry.Rect.BottomRight.X.ToString("0.0") + " Y:" + viewGeometry.Geometry.Rect.BottomRight.Y.ToString("0.0");
+            lblHeight.Text = "Height: " + viewGeometry.Geometry.Rect.Height.ToString("0.0");
+            lblWidth.Text = "Width: " + viewGeometry.Geometry.Rect.Width.ToString("0.0");
         }
     }
 }

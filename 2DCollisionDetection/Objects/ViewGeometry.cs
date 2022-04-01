@@ -2,54 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using _2DCollisionLibrary.Geometry;
 using _2DCollisionLibrary.Models;
-using _2DCollisionLibrary.Helpers;
 using System.Windows.Media;
-using _2DCollisionLibrary.Adapters;
-using _2DCollisionLibrary.Collision;
 
 namespace _2DCollisionDetection.Objects
 {
     public class ViewGeometry
     {
-        public class ViewGeometryHolder
-        {
-            public ViewGeometry ViewGeometry { get; private set; }
-            public object Element { get; private set; }
-            public object MouseEventArgs { get; private set; }
-
-            public ViewGeometryHolder(ViewGeometry viewGeometry, object element, object mouseEventArgs)
-            {
-                ViewGeometry = viewGeometry;
-                Element = element;
-                MouseEventArgs = mouseEventArgs;
-            }
-        }
-        public class Shape
-        {
-            public string Name { get; set; }
-
-            public FrameworkElement Element { get; private set; }
-            public IGeometry Geometry { get; private set; }
-
-            public Shape(FrameworkElement element, IGeometry geometry)
-            {
-                Name = element.Name;
-                Element = element;
-                Geometry = geometry;
-                Geometry.Name = element.Name;
-            }
-        }
-
         public Action<ViewGeometryHolder> MouseUp;
         public Action<ViewGeometryHolder> MouseDown;
         public Action<ViewGeometryHolder> MouseMove;
         public Action<List<ViewGeometry>> CheckCollision;
+        public bool ShowBoundingBox { get; set; }
 
         private List<ViewGeometry> CurrentCollisions { get; set; }
         private List<ViewGeometry> PreviousCollisions { get; set; }
@@ -63,18 +30,19 @@ namespace _2DCollisionDetection.Objects
             }
         }
         public MultiShape Geometry { get; private set; }
-        public List<Shape> Shapes { get; set; }
+        public List<ViewGeometryShape> Shapes { get; set; }
         private Dictionary<string, Point> ElementRelativePositioning { get; set; }
 
-        public ViewGeometry(List<ViewGeometry> collisionMap, ICollisionManager collisionManager)
+        public ViewGeometry(List<ViewGeometry> collisionMap, ICollisionManager collisionManager, bool showBoundingBox = false)
         {
-            Shapes = new List<Shape>();
+            Shapes = new List<ViewGeometryShape>();
             ElementRelativePositioning = new Dictionary<string, Point>();
             CollisionMap = collisionMap;
             Geometry = new MultiShape(new Vertex[0]);
             CollisionManager = collisionManager;
             PreviousCollisions = new List<ViewGeometry>();
             CurrentCollisions = new List<ViewGeometry>();
+            ShowBoundingBox = showBoundingBox;
         }
 
         private void RebuildGeometry()
@@ -90,7 +58,7 @@ namespace _2DCollisionDetection.Objects
 
         public ViewGeometry AddShape(FrameworkElement element, IGeometry geometry)
         {
-            Shape elementShape = new Shape(element, geometry);
+            ViewGeometryShape elementShape = new ViewGeometryShape(element, geometry);
             elementShape.Element.PreviewMouseDown += Element_PreviewMouseDown;
             elementShape.Element.PreviewMouseUp += Element_PreviewMouseUp;
             elementShape.Element.PreviewMouseMove += Element_PreviewMouseMove;
@@ -103,7 +71,7 @@ namespace _2DCollisionDetection.Objects
             return this;
         }
 
-        public ViewGeometry RemoveShape(Shape shape)
+        public ViewGeometry RemoveShape(ViewGeometryShape shape)
         {
             Shapes.Remove(shape);
             ElementRelativePositioning = GetElementRelativePosititions(Shapes.Select(p => p.Element).ToArray());
@@ -204,7 +172,7 @@ namespace _2DCollisionDetection.Objects
 
         public void Move(double xPos, double yPos)
         {
-            Shape movingShape = Shapes.FirstOrDefault();
+            ViewGeometryShape movingShape = Shapes.FirstOrDefault();
             if (movingShape != null)
             {
                 movingShape.Element.Margin = new Thickness(xPos, yPos, 0, 0);

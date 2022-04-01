@@ -15,9 +15,16 @@ using _2DCollisionLibrary.Points;
 
 namespace _2DCollisionLibrary.Collision
 {
+    public enum CollissionType
+    {
+        BoundingBox,
+        TraceLine,
+        XYLine,
+        CollisionLine
+    }
     public class CollisionManager : ICollisionManager
     {
-        public Action<Point, Point, string, string> OnRayLineCreated { get; set; }
+        public Action<Point, Point, CollissionType, string> OnRayLineCreated { get; set; }
         public int EdgeLimit { get; set; }
 
         public CollisionManager(int edgeLimit)

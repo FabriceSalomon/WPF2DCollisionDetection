@@ -29,10 +29,11 @@ namespace _2DCollisionDetection
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int rayCount = 0;
+        private int _rayCount;
         //Configure how often to calculate collision maps.
-        private const int dragCollisionRefresh = 2;
+        private readonly int _dragCollisionRefresh = 2;
 
+        private ViewGeometry SelectedViewGeometry { get; set; }
         private List<ViewGeometry> CollisionMap { get; set; }
 
         private double dragDistance = 0;
@@ -60,12 +61,12 @@ namespace _2DCollisionDetection
         {
             if (CollisionMap != null)
             {
-                double maxWidth = grdHolder.ActualWidth - 30;
-                double maxHeight = grdHolder.ActualHeight - 50;
+                var maxWidth = grdHolder.ActualWidth - 30;
+                var maxHeight = grdHolder.ActualHeight - 50;
                 foreach (var viewGeometry in CollisionMap)
                 {
-                    double xPosition = viewGeometry.Shapes.Min(o => o.Element.Margin.Left);
-                    double yPosition = viewGeometry.Shapes.Min(o => o.Element.Margin.Top);
+                    var xPosition = viewGeometry.Shapes.Min(o => o.Element.Margin.Left);
+                    var yPosition = viewGeometry.Shapes.Min(o => o.Element.Margin.Top);
 
                     viewGeometry.Move(Math.Min(maxWidth, Math.Max(0, xPosition)), Math.Min(maxHeight, Math.Max(0, yPosition)));
                     viewGeometry.OnCheckCollision();
@@ -83,7 +84,7 @@ namespace _2DCollisionDetection
         private void Shape_MouseUp(ViewGeometry viewGeometry, object sender, MouseButtonEventArgs e)
         {
             isDragging = false;
-            FrameworkElement element = (FrameworkElement)sender;
+            var element = (FrameworkElement)sender;
 
             if (element != null)
             {
@@ -92,7 +93,7 @@ namespace _2DCollisionDetection
 
                 element.ReleaseMouseCapture();
 
-                this.rectangleInfo.UpdateData(element.Name, viewGeometry);
+                rectangleInfo.UpdateData(element.Name, viewGeometry);
             }
         }
 
@@ -100,40 +101,41 @@ namespace _2DCollisionDetection
         {
             if (isDragging && sender != null)
             {
-                FrameworkElement element = (FrameworkElement)sender;
-                Point point = e.GetPosition(grdHolder);
+                var element = (FrameworkElement)sender;
+                var point = e.GetPosition(grdHolder);
 
-                double xPosition = point.X - selectPosition.X;
-                double yPosition = point.Y - selectPosition.Y;
+                var xPosition = point.X - selectPosition.X;
+                var yPosition = point.Y - selectPosition.Y;
 
-                double maxWidth = grdHolder.ActualWidth - 30;
-                double maxHeight = grdHolder.ActualHeight - 50;
+                var maxWidth = grdHolder.ActualWidth - 30;
+                var maxHeight = grdHolder.ActualHeight - 50;
 
                 dragDistance = Math.Abs(xPosition - refreshPosition.X) + Math.Abs(yPosition - refreshPosition.Y);
                 viewGeometry.Move(Math.Min(maxWidth, Math.Max(0, xPosition)), Math.Min(maxHeight, Math.Max(0, yPosition)));
                 
-                if (dragDistance >= dragCollisionRefresh)
+                if (dragDistance >= _dragCollisionRefresh)
                 {
                     refreshPosition = new Point(xPosition, yPosition);
                     viewGeometry.OnCheckCollision();
                     dragDistance = 0;
                 }
-                this.rectangleInfo.UpdateData(element.Name, viewGeometry);
+                rectangleInfo.UpdateData(element.Name, viewGeometry);
             }
         }
 
         private void Shape_MouseDown(ViewGeometry viewGeometry, object sender, MouseButtonEventArgs e)
         {
-            FrameworkElement element = (FrameworkElement)sender;
+            var element = (FrameworkElement)sender;
             if (element != null)
             {
+                SelectedViewGeometry = viewGeometry;
                 element.CaptureMouse();
                 selectPosition = e.GetPosition(element);
                 refreshPosition = selectPosition;
                 isDragging = true;
 
-                this.rectangleInfo.UpdateData(element.Name, viewGeometry);
-                if (dragDistance > dragCollisionRefresh)
+                rectangleInfo.UpdateData(element.Name, viewGeometry);
+                if (dragDistance > _dragCollisionRefresh)
                     dragDistance = 0;
             }
         }
@@ -142,18 +144,18 @@ namespace _2DCollisionDetection
         {
             CollisionMap = new List<ViewGeometry>();
 
-            Action<ViewGeometry.ViewGeometryHolder> onMouseDown = (item) =>
+            Action<ViewGeometryHolder> onMouseDown = (item) =>
             {
                 Shape_MouseDown(item.ViewGeometry, item.Element, (MouseButtonEventArgs)item.MouseEventArgs);
                 DrawBoundingBox("", item.ViewGeometry.Geometry.Rect);
             };
-            Action<ViewGeometry.ViewGeometryHolder> onMouseUp = (item) =>
+            Action<ViewGeometryHolder> onMouseUp = (item) =>
             {
                 Shape_MouseUp(item.ViewGeometry, item.Element, (MouseButtonEventArgs)item.MouseEventArgs);
                 OutlineEdges(item.ViewGeometry);
                 DrawBoundingBox("", item.ViewGeometry.Geometry.Rect);
             };
-            Action<ViewGeometry.ViewGeometryHolder> onMouseMove = (item) =>
+            Action<ViewGeometryHolder> onMouseMove = (item) =>
             {
                 Shape_MouseMove(item.ViewGeometry, item.Element, (MouseEventArgs)item.MouseEventArgs);
                 if (isDragging)
@@ -163,30 +165,30 @@ namespace _2DCollisionDetection
                 }
             };
 
-            CollisionManager collisionManager = new CollisionManager(2);
+            var collisionManager = new CollisionManager(2);
             collisionManager.OnRayLineCreated += DisplayRayLine;
 
-            ViewGeometry viewGeometry1 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctOne, new DynamicShape(new GeometryViewAdapter(rctOne)));
+            var viewGeometry1 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctOne, new DynamicShape(new GeometryViewAdapter(rctOne)));
             viewGeometry1.MouseDown += onMouseDown;
             viewGeometry1.MouseUp += onMouseUp;
             viewGeometry1.MouseMove += onMouseMove;
 
-            ViewGeometry viewGeometry2 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctThree, new DynamicShape(new GeometryViewAdapter(rctThree)));
+            var viewGeometry2 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctThree, new DynamicShape(new GeometryViewAdapter(rctThree)));
             viewGeometry2.MouseDown += onMouseDown;
             viewGeometry2.MouseUp += onMouseUp;
             viewGeometry2.MouseMove += onMouseMove;
 
-            ViewGeometry viewGeometry3 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctFour, new DynamicShape(new GeometryViewAdapter(rctFour)));
+            var viewGeometry3 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctFour, new DynamicShape(new GeometryViewAdapter(rctFour)));
             viewGeometry3.MouseDown += onMouseDown;
             viewGeometry3.MouseUp += onMouseUp;
             viewGeometry3.MouseMove += onMouseMove;
 
-            ViewGeometry viewGeometry4 = new ViewGeometry(CollisionMap, collisionManager).AddShape(polyTriangle, new DynamicShape(new GeometryViewAdapter(polyTriangle)));
+            var viewGeometry4 = new ViewGeometry(CollisionMap, collisionManager).AddShape(polyTriangle, new DynamicShape(new GeometryViewAdapter(polyTriangle)));
             viewGeometry4.MouseDown += onMouseDown;
             viewGeometry4.MouseUp += onMouseUp;
             viewGeometry4.MouseMove += onMouseMove;
 
-            ViewGeometry viewGeometry5 = new ViewGeometry(CollisionMap, collisionManager).AddShape(polyOctagon, new DynamicShape(new GeometryViewAdapter(polyOctagon)));
+            var viewGeometry5 = new ViewGeometry(CollisionMap, collisionManager).AddShape(polyOctagon, new DynamicShape(new GeometryViewAdapter(polyOctagon)));
             viewGeometry5.MouseDown += onMouseDown;
             viewGeometry5.MouseUp += onMouseUp;
             viewGeometry5.MouseMove += onMouseMove;
@@ -216,13 +218,23 @@ namespace _2DCollisionDetection
                 };
 
             CollisionViewGeometry3 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctTwo3, new DynamicShape(new GeometryViewAdapter(rctTwo3))).AddShape(txtCollision3, new DynamicShape(new GeometryViewAdapter(txtCollision3)));
-            CollisionViewGeometry3.MouseDown += (result) => { Shape_MouseDown(result.ViewGeometry, result.Element, (MouseButtonEventArgs)result.MouseEventArgs); };
-            CollisionViewGeometry3.MouseUp += (result) => { Shape_MouseUp(result.ViewGeometry, result.Element, (MouseButtonEventArgs)result.MouseEventArgs); };
-            CollisionViewGeometry3.MouseMove += (result) => { if (isDragging) Shape_MouseMove(result.ViewGeometry, result.Element, (MouseEventArgs)result.MouseEventArgs); };
-            CollisionViewGeometry3.CheckCollision += (results) =>
+            CollisionViewGeometry3.MouseDown += (item) => 
+            { 
+                Shape_MouseDown(item.ViewGeometry, item.Element, (MouseButtonEventArgs)item.MouseEventArgs);
+            };
+            CollisionViewGeometry3.MouseUp += (item) => 
+            { 
+                Shape_MouseUp(item.ViewGeometry, item.Element, (MouseButtonEventArgs)item.MouseEventArgs); 
+            };
+            CollisionViewGeometry3.MouseMove += (item) =>
+            { 
+                if (isDragging) 
+                    Shape_MouseMove(item.ViewGeometry, item.Element, (MouseEventArgs)item.MouseEventArgs);
+            };
+            CollisionViewGeometry3.CheckCollision += (items) =>
                 {
-                    if (results.Count > 0)
-                        txtCollision3.Text = "Colliding with " + results.Count() + " items";
+                    if (items.Count > 0)
+                        txtCollision3.Text = "Colliding with " + items.Count() + " items";
                     else
                         txtCollision3.Text = "No collisions";
                 };
@@ -241,7 +253,7 @@ namespace _2DCollisionDetection
                 OutlineEdges(item);
             }
 
-            Timer timer = new Timer(3);
+            var timer = new Timer(3);
             timer.Elapsed += (param1, param2) =>
                 {
                     //This way of invoking prevents crashing during shutdown.
@@ -252,11 +264,11 @@ namespace _2DCollisionDetection
                                 {
                                     timer.Stop();
 
-                                    ViewGeometry.Shape shape = CollisionViewGeometry3.Shapes.FirstOrDefault(p => p.Element == rctTwo3);
                                     CollisionViewGeometry3.Rotate(0.4f);
                                     OutlineEdges(CollisionViewGeometry3);
                                     CollisionViewGeometry3.OnCheckCollision();
-                                    DrawBoundingBox("rotating", CollisionViewGeometry3.Geometry.Rect);
+                                    if(SelectedViewGeometry == CollisionViewGeometry3)
+                                        DrawBoundingBox("", CollisionViewGeometry3.Geometry.Rect);
                                     timer.Start();
                                 }
                             )
@@ -271,34 +283,34 @@ namespace _2DCollisionDetection
             {
                 foreach (var connection in vertex.VertexConnections)
                 {
-                    DisplayRayLine(connection.Vertex1.Position.Point, connection.Vertex2.Position.Point, "TraceLine", connection.Name);
+                    DisplayRayLine(connection.Vertex1.Position.Point, connection.Vertex2.Position.Point, CollissionType.TraceLine, connection.Name);
                 }
             }
         }
 
         private void DrawBoundingBox(string id, Rect boundingBox)
         {
-            DisplayRayLine(boundingBox.TopLeft, boundingBox.TopRight, "BoundingBox", "top" + id);
-            DisplayRayLine(boundingBox.TopRight, boundingBox.BottomRight, "BoundingBox", "right" + id);
-            DisplayRayLine(boundingBox.BottomLeft, boundingBox.BottomRight, "BoundingBox", "bottom" + id);
-            DisplayRayLine(boundingBox.BottomLeft, boundingBox.TopLeft, "BoundingBox", "left" + id);
+            DisplayRayLine(boundingBox.TopLeft, boundingBox.TopRight, CollissionType.BoundingBox, "top" + id);
+            DisplayRayLine(boundingBox.TopRight, boundingBox.BottomRight, CollissionType.BoundingBox, "right" + id);
+            DisplayRayLine(boundingBox.BottomLeft, boundingBox.BottomRight, CollissionType.BoundingBox, "bottom" + id);
+            DisplayRayLine(boundingBox.BottomLeft, boundingBox.TopLeft, CollissionType.BoundingBox, "left" + id);
         }
 
-        private void DisplayRayLine(Point point1, Point point2, string type, string name)
+        private void DisplayRayLine(Point point1, Point point2, CollissionType type, string name)
         {
-            if (type.ToLower() == "xyline")
+            if (type == CollissionType.XYLine)
             {
-                if (name == "rctTwo3txtCollision3")
-                    name += rayCount;
+                if (name.Equals("rctTwo3txtCollision3", StringComparison.OrdinalIgnoreCase))
+                    name += _rayCount;
                 else
-                    name = type + rayCount;
+                    name = type.ToString() + _rayCount;
 
-                rayCount++;
-                if (rayCount > 30)
-                    rayCount = 0;
+                _rayCount++;
+                if (_rayCount > 30)
+                    _rayCount = 0;
             }
 
-            Line line1 = grdHolder.Children.OfType<Line>().FirstOrDefault(p => p.Name == name + type);
+            var line1 = grdHolder.Children.OfType<Line>().FirstOrDefault(p => p.Name == name + type);
             if (line1 == null)
             {
                 line1 = new Line();
@@ -310,19 +322,19 @@ namespace _2DCollisionDetection
             line1.X2 = point2.X;
             line1.Y2 = point2.Y;
 
-            if (type.ToLower() == "traceline")
+            if (type == CollissionType.TraceLine)
             {
                 line1.StrokeThickness = 2;
                 line1.Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#90551a8b"));//purple
                 line1.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#90551a8b"));//purple
             }
-            else if (type.ToLower() == "collisionline")
+            else if (type == CollissionType.CollisionLine)
             {
                 line1.StrokeThickness = 2;
                 line1.Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#5000d6a0"));//teal
                 line1.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#5000d6a0"));//teal
             }
-            else if (type.ToLower() == "xyline")
+            else if (type == CollissionType.XYLine )
             {
                 line1.X2 += 1;
                 line1.Y2 += 1;
@@ -330,7 +342,7 @@ namespace _2DCollisionDetection
                 line1.Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#800000FF"));//blue
                 line1.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#800000FF"));//blue
             }
-            else if (type.ToLower() == "boundingbox")
+            else if (type == CollissionType.BoundingBox)
             {
                 line1.StrokeThickness = 2;
                 line1.Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#70ff8d00"));//orange

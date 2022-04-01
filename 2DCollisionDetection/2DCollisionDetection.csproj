@@ -54,6 +54,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CustomAdapters\GeometryViewAdapter.cs" />
+    <Compile Include="Models\ViewGeometryShape.cs" />
+    <Compile Include="Models\ViewGeometryHolder.cs" />
     <Compile Include="Objects\ViewGeometry.cs" />
     <Page Include="ElementInfoControl.xaml">
       <SubType>Designer</SubType>
