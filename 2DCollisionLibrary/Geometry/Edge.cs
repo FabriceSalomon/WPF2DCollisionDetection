@@ -17,9 +17,8 @@ namespace _2DCollisionLibrary.Geometry
 {
     public class Edge : BaseGeometry
     {
-        private static int count;
-        private Vertex[] vertices;
-
+        private static int _count;
+        private Vertex[] _vertices;
         public Vertex StartPoint { get; set; }
         public Vertex EndPoint { get; set; }
 
@@ -35,8 +34,8 @@ namespace _2DCollisionLibrary.Geometry
 
         public Edge(Position startPoint, Position endPoint)
         {
-            Name = "Edge" + count;
-            count++;
+            Name = "Edge" + _count;
+            _count++;
 
             CreateShape();
             UpdateShape(startPoint, endPoint);
@@ -57,7 +56,7 @@ namespace _2DCollisionLibrary.Geometry
             StartPoint.Position = startPoint;
             EndPoint.Position = endPoint;
 
-            vertices = new Vertex[] { StartPoint, EndPoint };
+            _vertices = new Vertex[] { StartPoint, EndPoint };
             Build();
         }
 
@@ -67,7 +66,7 @@ namespace _2DCollisionLibrary.Geometry
 
         public override Vertex[] GetVertices()
         {
-            return vertices;
+            return _vertices;
         }
     }
 }

@@ -34,16 +34,10 @@ namespace _2DCollisionLibrary.Adapters
         {
             for (int i = 0; i < vertices.Count(); i++)
             {
-                Vertex currentVertex = vertices[i];
                 if (i + 1 < vertices.Length)
-                {
-                    Vertex nextVertex = vertices[i + 1];
-                    currentVertex.AddConnection(nextVertex);
-                }
+                    vertices[i].AddConnection(vertices[i + 1]);
                 else
-                {
-                    currentVertex.AddConnection(vertices[0]);
-                }
+                    vertices[i].AddConnection(vertices[0]);
             }
 
             return vertices;
@@ -51,7 +45,7 @@ namespace _2DCollisionLibrary.Adapters
 
         protected Vertex[] ConvertToVertices(params Point[] points)
         {
-            Vertex[] vertices = points.ToList().ConvertAll(p => new Vertex(p)).ToArray();
+            var vertices = points.ToList().ConvertAll(p => new Vertex(p)).ToArray();
             return vertices;
         }
     }

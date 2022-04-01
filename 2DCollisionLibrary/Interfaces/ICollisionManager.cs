@@ -8,6 +8,6 @@ namespace _2DCollisionLibrary.Interfaces
 {
     public interface ICollisionManager
     {
-        bool CalculateCollision(IGeometry collisionElement, IGeometry collidable);
+        bool IsCollision(IGeometry collisionElement, IGeometry collidable);
     }
 }

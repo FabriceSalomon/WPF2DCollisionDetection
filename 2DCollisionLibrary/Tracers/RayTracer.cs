@@ -19,7 +19,7 @@ namespace _2DCollisionLibrary.Tracers
 
         public override bool IsCollision(Line collisionEdge)
         {
-            Point rayTraceCord = LineIntersectionPoint(new Line(StartPoint, EndPoint), collisionEdge);
+            var rayTraceCord = LineIntersectionPoint(new Line(StartPoint, EndPoint), collisionEdge);
             if (!double.IsNaN(rayTraceCord.X) && !double.IsNaN(rayTraceCord.Y))
             {
                 if (RayLineCreated != null)

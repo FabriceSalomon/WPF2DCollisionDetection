@@ -46,9 +46,7 @@ namespace _2DCollisionLibrary.Geometry
 
         public virtual void MoveOffset(double xOffset, double yOffset)
         {
-            double xPos = Position.X + xOffset;
-            double yPos = Position.Y + yOffset;
-            MoveTo(xPos, yPos);
+            MoveTo(Position.X + xOffset, Position.Y + yOffset);
         }
 
         public virtual void MoveTo(double xPos, double yPos)
@@ -67,9 +65,7 @@ namespace _2DCollisionLibrary.Geometry
 
         public virtual void Scale(double xScale, double yScale, double centerX, double centerY)
         {
-            double xPercent = xScale / Transformation.ScaleX;
-            double yPercent = yScale / Transformation.ScaleY;
-            Vertices.Scale(xPercent, yPercent, centerX, centerY);
+            Vertices.Scale(xScale / Transformation.ScaleX, yScale / Transformation.ScaleY, centerX, centerY);
             Transformation.ScaleX = xScale;
             Transformation.ScaleY = yScale;
             UpdateBoundingBox(Vertices);

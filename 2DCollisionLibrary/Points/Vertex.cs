@@ -46,12 +46,12 @@ namespace _2DCollisionLibrary.Models
 
         public void Rotate(Point origin, double angle)
         {
-            double hyppLenght = origin.Distance(Position.Point);
-            double hyppAngle = origin.CalculateAngleDifference(Position.Point);
+            var hyppLenght = origin.Distance(Position.Point);
+            var hyppAngle = origin.CalculateAngleDifference(Position.Point);
 
-            double targetHyppAngle = hyppAngle + angle;
-            double targetOppLenght = Math.Cos(Utility2DMath.ToRadians(90 - targetHyppAngle)) * hyppLenght;
-            double targetAdjLenght = Math.Tan(Utility2DMath.ToRadians(90 - targetHyppAngle)) * targetOppLenght;
+            var targetHyppAngle = hyppAngle + angle;
+            var targetOppLenght = Math.Cos(Utility2DMath.ToRadians(90 - targetHyppAngle)) * hyppLenght;
+            var targetAdjLenght = Math.Tan(Utility2DMath.ToRadians(90 - targetHyppAngle)) * targetOppLenght;
 
             Position.Point = new Point(origin.X - targetAdjLenght, origin.Y - targetOppLenght);
         }

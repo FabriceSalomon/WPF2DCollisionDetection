@@ -10,8 +10,8 @@ namespace _2DCollisionLibrary.Geometry
 {
     public class DynamicShape : BaseGeometry
     {
-        private Vertex[] vertices;
-        private IGeometryAdapter geometryAdapter;
+        private Vertex[] _vertices;
+        private IGeometryAdapter _geometryAdapter;
 
         public DynamicShape(IGeometryAdapter geometryAdapter)
         {
@@ -20,30 +20,28 @@ namespace _2DCollisionLibrary.Geometry
 
         private void CreateShape(Vertex[] vertices)
         {
-            this.vertices = vertices;
-            for (int i = 0; i < this.vertices.Length; i++)
-            {
+            _vertices = vertices;
+            for (int i = 0; i < _vertices.Length; i++)
                 vertices[i].Name = Name + "p" + i;
-            }
         }
 
-        public void UpdateShape(IGeometryAdapter geometryAdpt)
+        public void UpdateShape(IGeometryAdapter geometryAdapter)
         {
-            geometryAdapter = geometryAdpt;
-            Name = geometryAdapter.Name;
-            CreateShape(geometryAdapter.Vertices);
-            geometryAdapter.ConnectVertices(vertices);
+            _geometryAdapter = geometryAdapter;
+            Name = _geometryAdapter.Name;
+            CreateShape(_geometryAdapter.Vertices);
+            _geometryAdapter.ConnectVertices(_vertices);
             Build();
         }
 
         public override void Refresh()
         {
-            geometryAdapter.UpdateVertices();
+            _geometryAdapter.UpdateVertices();
         }
 
         public override Vertex[] GetVertices()
         {
-            return vertices;
+            return _vertices;
         }
     }
 }

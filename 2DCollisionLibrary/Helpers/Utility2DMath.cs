@@ -13,50 +13,15 @@ namespace _2DCollisionLibrary.Helpers
 {
     public static class Utility2DMath
     {
-        public static Point GetCordsFromYCord(double yTargetCord, Point startPoint, Point endPoint)
-        {
-            double minNumber = Math.Min(startPoint.Y, endPoint.Y);
-            double maxNumber = Math.Max(startPoint.Y, endPoint.Y);
-
-            double percent = (yTargetCord - minNumber) / (maxNumber - minNumber);
-            double yCord = BlendValues(minNumber, maxNumber, percent);
-            double xCord = 0;
-            if (startPoint.Y < endPoint.Y)
-                xCord = BlendValues(startPoint.X, endPoint.X, percent);
-            else
-                xCord = BlendValues(endPoint.X, startPoint.X, percent);
-            return new Point(xCord, yCord);
-        }
-
-        public static Point GetCordsFromXCord(double xTargetCord, Point startPoint, Point endPoint)
-        {
-            double minNumber = Math.Min(startPoint.X, endPoint.X);
-            double maxNumber = Math.Max(startPoint.X, endPoint.X);
-
-            double percent = (xTargetCord - minNumber) / (maxNumber - minNumber);
-            double xCord = BlendValues(minNumber, maxNumber, percent);
-            double yCord = 0;
-            if (startPoint.X < endPoint.X)
-                yCord = BlendValues(startPoint.Y, endPoint.Y, percent);
-            else
-                yCord = BlendValues(endPoint.Y, startPoint.Y, percent);
-            return new Point(xCord, yCord);
-        }
-
         public static Point Center(this Rect rect)
         {
-            Point point = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
+            var point = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
             return point;
         }
 
-        public static bool ValueInRange(this double value, double val1, double val2)
+        public static bool ValueInRange(this double value, double val1, double val2, double hitboxSize = 0)
         {
-            return ValueInRange(value, val1, val2, 0);
-        }
-
-        public static bool ValueInRange(this double value, double val1, double val2, double size)
-        {
-            if (value >= Math.Min(val1, val2) - size && value <= Math.Max(val1, val2) + size)
+            if (value >= Math.Min(val1, val2) - hitboxSize && value <= Math.Max(val1, val2) + hitboxSize)
                 return true;
 
             return false;
@@ -74,8 +39,8 @@ namespace _2DCollisionLibrary.Helpers
 
         public static double ClampValue(double value, double val1, double val2)
         {
-            double min = Math.Min(val1, val2);
-            double max = Math.Max(val1, val2);
+            var min = Math.Min(val1, val2);
+            var max = Math.Max(val1, val2);
             if (value < min)
                 value = min;
             else if (value > max)
@@ -86,14 +51,14 @@ namespace _2DCollisionLibrary.Helpers
 
         public static double BlendValues(double val1, double val2, double percent)
         {
-            double newvalue = val1 + percent * (val2 - val1);
+            var newvalue = val1 + percent * (val2 - val1);
             return newvalue;
         }
 
         public static Point BlendPoints(Point point1, Point point2, double percent)
         {
-            double xValue = BlendValues(point1.X, point2.X, percent);
-            double yValue = BlendValues(point1.Y, point2.Y, percent);
+            var xValue = BlendValues(point1.X, point2.X, percent);
+            var yValue = BlendValues(point1.Y, point2.Y, percent);
             return new Point(xValue, yValue);
         }
 
@@ -117,22 +82,22 @@ namespace _2DCollisionLibrary.Helpers
 
         public static double CalculateLenght(this Line line)
         {
-            double distance = line.StartPoint.Distance(line.EndPoint);
+            var distance = line.StartPoint.Distance(line.EndPoint);
             return distance;
         }
 
         public static double Distance(this Point point1, Point point2)
         {
-            double distance = Point.Subtract(point1,point2).Length;
+            var distance = Point.Subtract(point1, point2).Length;
             return distance;
         }
 
         public static Point ScalePointPercent(this Point point, Point center, double xPercent, double yPercent)
         {
-            Point direction = (Point)Point.Subtract(center, point);
+            var direction = (Point)Point.Subtract(center, point);
             direction.X = direction.X * (1 - xPercent);
             direction.Y = direction.Y * (1 - yPercent);
-            TranslateTransform transform = new TranslateTransform(direction.X, direction.Y);
+            var transform = new TranslateTransform(direction.X, direction.Y);
             point = transform.Transform(point);
 
             return point;
@@ -140,25 +105,25 @@ namespace _2DCollisionLibrary.Helpers
 
         public static double CalculateAngleDifference(this Point point1, Point point2)
         {
-            double xDiff = point1.X - point2.X;
-            double yDiff = point1.Y - point2.Y;
-            double angle = (((Math.Atan2(yDiff, xDiff) * 180) / Math.PI)) % 180;
+            var xDiff = point1.X - point2.X;
+            var yDiff = point1.Y - point2.Y;
+            var angle = (((Math.Atan2(yDiff, xDiff) * 180) / Math.PI)) % 180;
             return angle;
         }
 
         public static double CalculateAngleDifference(this Line line1, Line line2)
         {
-            double angle1 = line1.StartPoint.CalculateAngleDifference(line1.EndPoint);
-            double angle2 = line2.StartPoint.CalculateAngleDifference(line2.EndPoint);
+            var angle1 = line1.StartPoint.CalculateAngleDifference(line1.EndPoint);
+            var angle2 = line2.StartPoint.CalculateAngleDifference(line2.EndPoint);
 
             return CalculateAngleDifference(angle1, angle2);
         }
 
         public static double CalculateAngleDifference(double angle1, double angle2)
         {
-            double angle = Math.Abs(angle1 - angle2) % 360;
+            var angle = Math.Abs(angle1 - angle2) % 360;
             if (angle > 180)
-                angle = 360 - angle;
+                return 360 - angle;
 
             return angle;
         }

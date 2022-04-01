@@ -170,8 +170,7 @@ namespace _2DCollisionDetection.Objects
             List<ViewGeometry> collisions = new List<ViewGeometry>();
             foreach (var collision in CollisionMap.Where(p => Name != p.Name).ToDictionary(p => p.Geometry, o => o))
             {
-                bool isCollision = CollisionManager.CalculateCollision(Geometry, collision.Key);
-                if (isCollision)
+                if (CollisionManager.IsCollision(Geometry, collision.Key))
                     collisions.Add(collision.Value);
             }
 
@@ -179,6 +178,7 @@ namespace _2DCollisionDetection.Objects
             {
                 if (!CurrentCollisions.Any(p => p == item))
                     CurrentCollisions.Add(item);
+
                 if (!item.CurrentCollisions.Any(p => p == this))
                     item.CurrentCollisions.Add(this);
 
@@ -217,7 +217,7 @@ namespace _2DCollisionDetection.Objects
             }
         }
 
-        public void Rotate(Shape rotatingShape, double angle)
+        public void Rotate(double angle)
         {
             foreach (var shape in Shapes)
             {

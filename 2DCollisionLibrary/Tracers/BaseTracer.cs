@@ -29,30 +29,30 @@ namespace _2DCollisionLibrary.Tracers
 
         protected virtual Point LineIntersectionPoint(Line line1, Line line2)
         {
-            Line[] lines = new Line[] { line1, line2 }.OrderByDescending(p => Math.Abs(p.StartPoint.X - p.EndPoint.X)).ToArray();
-            Line line = lines[0];
-            Line staticLine = lines[1];
+            var lines = new Line[] { line1, line2 }.OrderByDescending(p => Math.Abs(p.StartPoint.X - p.EndPoint.X)).ToArray();
+            var line = lines[0];
+            var staticLine = lines[1];
 
             if (line.EndPoint.X < line.StartPoint.X)
                 line = new Line(line.EndPoint, line.StartPoint);
             if (staticLine.EndPoint.X < staticLine.StartPoint.X)
                 staticLine = new Line(staticLine.EndPoint, staticLine.StartPoint);
 
-            double staticLineOpp = staticLine.EndPoint.Y - staticLine.StartPoint.Y;
-            double staticLineAdj = staticLine.EndPoint.X - staticLine.StartPoint.X;
-            double staticLineAccelerationRate = staticLineOpp / Math.Abs(staticLineAdj);
+            var staticLineOpp = staticLine.EndPoint.Y - staticLine.StartPoint.Y;
+            var staticLineAdj = staticLine.EndPoint.X - staticLine.StartPoint.X;
+            var staticLineAccelerationRate = staticLineOpp / Math.Abs(staticLineAdj);
 
-            double lineOpp = line.EndPoint.Y - line.StartPoint.Y;
-            double lineAdj = line.EndPoint.X - line.StartPoint.X;
-            double lineAccelerationRate = lineOpp / Math.Abs(lineAdj);
+            var lineOpp = line.EndPoint.Y - line.StartPoint.Y;
+            var lineAdj = line.EndPoint.X - line.StartPoint.X;
+            var lineAccelerationRate = lineOpp / Math.Abs(lineAdj);
 
             //When the lines have the same xCord we can start comparing how fast the gap between them is closing and where they will collide.
-            double distance = staticLine.StartPoint.X - line.StartPoint.X;
-            double heightDifference = (line.StartPoint.Y + (distance * lineAccelerationRate)) - staticLine.StartPoint.Y;
-            double heightLossRatio = staticLineAccelerationRate - lineAccelerationRate;
+            var distance = staticLine.StartPoint.X - line.StartPoint.X;
+            var heightDifference = (line.StartPoint.Y + (distance * lineAccelerationRate)) - staticLine.StartPoint.Y;
+            var heightLossRatio = staticLineAccelerationRate - lineAccelerationRate;
 
-            double xIntersectionPoint = staticLine.StartPoint.X + (heightDifference / heightLossRatio);
-            double yIntersectionPoint = line.StartPoint.Y + (((heightDifference / heightLossRatio) + distance) * lineAccelerationRate);
+            var xIntersectionPoint = staticLine.StartPoint.X + (heightDifference / heightLossRatio);
+            var yIntersectionPoint = line.StartPoint.Y + (((heightDifference / heightLossRatio) + distance) * lineAccelerationRate);
 
             if (!xIntersectionPoint.ValueInRange(staticLine.StartPoint.X, staticLine.EndPoint.X, 0.2f))
                 return new Point(double.NaN, double.NaN);

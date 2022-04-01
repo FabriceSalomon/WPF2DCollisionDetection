@@ -15,21 +15,21 @@ namespace _2DCollisionLibrary.Geometry
 {
     public class MultiShape : BaseGeometry
     {
-        private static int count;
-        private Vertex[] vertices;
+        private static int _count;
+        private Vertex[] _vertices;
 
         public MultiShape(Vertex[] vertices)
         {
-            Name = "Multishape" + count;
-            count++;
+            Name = "Multishape" + _count;
+            _count++;
             CreateShape(vertices);
             UpdateShape(vertices);
         }
 
         private void CreateShape(Vertex[] vertices)
         {
-            this.vertices = vertices;
-            for (int i = 0; i < this.vertices.Length; i++)
+            _vertices = vertices;
+            for (int i = 0; i < _vertices.Length; i++)
             {
                 vertices[i].Name = Name + "p" + i;
             }
@@ -37,7 +37,7 @@ namespace _2DCollisionLibrary.Geometry
 
         public void UpdateShape(Vertex[] vertices)
         {
-            this.vertices = vertices;
+            _vertices = vertices;
             Build();
         }
 
@@ -47,7 +47,7 @@ namespace _2DCollisionLibrary.Geometry
 
         public override Vertex[] GetVertices()
         {
-            return vertices;
+            return _vertices;
         }
     }
 }

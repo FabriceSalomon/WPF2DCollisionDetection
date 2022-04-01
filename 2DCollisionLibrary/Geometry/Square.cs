@@ -14,8 +14,8 @@ namespace _2DCollisionLibrary.Geometry
 {
     public class Square : BaseGeometry
     {
-        private static int count;
-        private Vertex[] vertices;
+        private static int _count;
+        private Vertex[] _vertices;
 
         public Vertex TopLeft { get; set; }
         public Vertex TopRight { get; set; }
@@ -34,8 +34,8 @@ namespace _2DCollisionLibrary.Geometry
 
         public Square(Position topLeft, Position topRight, Position bottomLeft, Position bottomRight)
         {
-            Name = "Square" + count;
-            count++;
+            Name = "Square" + _count;
+            _count++;
 
             CreateShape();
             UpdateShape(topLeft, topRight, bottomLeft, bottomRight);
@@ -66,7 +66,7 @@ namespace _2DCollisionLibrary.Geometry
             BottomLeft.Position = bottomLeft;
             BottomRight.Position = bottomRight;
 
-            vertices = new Vertex[] { TopLeft, TopRight, BottomLeft, BottomRight };
+            _vertices = new Vertex[] { TopLeft, TopRight, BottomLeft, BottomRight };
             Build();
         }
 
@@ -76,7 +76,7 @@ namespace _2DCollisionLibrary.Geometry
 
         public override Vertex[] GetVertices()
         {
-            return vertices;
+            return _vertices;
         }
     }
 }

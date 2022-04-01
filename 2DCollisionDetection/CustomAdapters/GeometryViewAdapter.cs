@@ -31,7 +31,7 @@ namespace _2DCollisionDetection.CustomAdapters
 
         public override void UpdateVertices()
         {
-            Point[] points = GetPoints();
+            var points = GetPoints();
             for (int i = 0; i < Vertices.Length; i++)
             {
                 Vertices[i].Position.Point = points[i];
@@ -40,32 +40,29 @@ namespace _2DCollisionDetection.CustomAdapters
 
         public Point[] GetPoints()
         {
-            Point[] points;
             if (View is Polygon)
-                points = GetPointsFromPoly((Polygon)View);
-            else
-                points = GetPointsFromSquare(View);
+                return GetPointsFromPoly((Polygon)View);
 
-            return points;
+            return GetPointsFromSquare(View);
         }
 
         private Point[] GetPointsFromSquare(FrameworkElement view)
         {
-            UIElement parent = VisualTreeHelper.GetParent(view) as UIElement;
-            GeneralTransform transform = view.TransformToAncestor(parent);
+            var parent = VisualTreeHelper.GetParent(view) as UIElement;
+            var transform = view.TransformToAncestor(parent);
 
-            Point topLeft = transform.Transform(new Point(0, 0));
-            Point topRight = transform.Transform(new Point(view.ActualWidth, 0));
-            Point bottomRight = transform.Transform(new Point(view.ActualWidth, View.ActualHeight));
-            Point bottomLeft = transform.Transform(new Point(0, view.ActualHeight));
+            var topLeft = transform.Transform(new Point(0, 0));
+            var topRight = transform.Transform(new Point(view.ActualWidth, 0));
+            var bottomRight = transform.Transform(new Point(view.ActualWidth, View.ActualHeight));
+            var bottomLeft = transform.Transform(new Point(0, view.ActualHeight));
 
-            return new Point[] { topLeft, topRight , bottomRight, bottomLeft };
+            return new Point[] { topLeft, topRight, bottomRight, bottomLeft };
         }
 
         private Point[] GetPointsFromPoly(Polygon view)
         {
-            UIElement parent = VisualTreeHelper.GetParent(view) as UIElement;
-            GeneralTransform transform = view.TransformToAncestor(parent);
+            var parent = VisualTreeHelper.GetParent(view) as UIElement;
+            var transform = view.TransformToAncestor(parent);
             return view.Points.Select(p => transform.Transform(p)).ToArray();
         }
     }

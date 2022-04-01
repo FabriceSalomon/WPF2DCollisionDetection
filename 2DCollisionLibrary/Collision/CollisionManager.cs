@@ -25,22 +25,19 @@ namespace _2DCollisionLibrary.Collision
             EdgeLimit = edgeLimit;
         }
 
-        public virtual bool CalculateCollision(IGeometry collisionElement, IGeometry collidable)
+        public virtual bool IsCollision(IGeometry collisionElement, IGeometry collidable)
         {
-            List<IGeometry> collidingObjects = new List<IGeometry>();
-
             if (collidable.Rect.IsOverlapping(collisionElement.Rect))
             {
-                List<VertexConnection> collidingSides = CalculateCollidingSides(collisionElement, collidable, EdgeLimit);
-                if (collidingSides.Count > 0)
-                    return true;
+                var collidingSides = CalculateCollidingSides(collisionElement, collidable, EdgeLimit);
+                return collidingSides.Count > 0;
             }
             return false;
         }
 
         private List<VertexConnection> CalculateCollidingSides(IGeometry collisionElement, IGeometry collidable, int edgeLimit)
         {
-            List<VertexConnection> collidingSides = new List<VertexConnection>();
+            var collidingSides = new List<VertexConnection>();
 
             foreach (var vertex in collisionElement.Vertices)
             {
@@ -49,32 +46,28 @@ namespace _2DCollisionLibrary.Collision
 
                 foreach (var connection in vertex.VertexConnections)
                 {
-                    if (IsCollision(collidable, connection.Vertex1.Position.Point, connection.Vertex2.Position.Point, vertex.Name, collisionElement.Name))
-                        collidingSides.Add(connection);   
+                    if (IsCollision(collidable, connection.Vertex1.Position.Point, connection.Vertex2.Position.Point, collisionElement.Name))
+                        collidingSides.Add(connection);
                 }
             }
             return collidingSides;
         }
 
-        private bool IsCollision(IGeometry collidableElement, Point startPoint, Point endPoint, string connectionName, string collisionObjectName)
+        private bool IsCollision(IGeometry collidableElement, Point startPoint, Point endPoint, string collisionObjectName)
         {
-            RayTracer rayTrace = new RayTracer(startPoint, endPoint);
+            var rayTrace = new RayTracer(startPoint, endPoint);
             rayTrace.RayLineCreated = OnRayLineCreated;
-            bool result = false;
             foreach (var vertex in collidableElement.Vertices)
             {
                 foreach (var connection in vertex.VertexConnections)
                 {
-                    Line line = new Line(connection.Vertex1.Position.Point, connection.Vertex2.Position.Point);
+                    var line = new Line(connection.Vertex1.Position.Point, connection.Vertex2.Position.Point);
                     rayTrace.Name = collisionObjectName;
                     if (rayTrace.IsCollision(line))
-                        result = true;
+                        return true;
                 }
             }
-            if (result)
-                return true;
-            else
-                return false;
+            return false;
         }
     }
 }

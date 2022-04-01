@@ -253,7 +253,7 @@ namespace _2DCollisionDetection
                                     timer.Stop();
 
                                     ViewGeometry.Shape shape = CollisionViewGeometry3.Shapes.FirstOrDefault(p => p.Element == rctTwo3);
-                                    CollisionViewGeometry3.Rotate(shape, 0.4f);
+                                    CollisionViewGeometry3.Rotate(0.4f);
                                     OutlineEdges(CollisionViewGeometry3);
                                     CollisionViewGeometry3.OnCheckCollision();
                                     DrawBoundingBox("rotating", CollisionViewGeometry3.Geometry.Rect);
