@@ -39,7 +39,7 @@ namespace _2DCollisionLibrary.Geometry
             _geometryAdapter.UpdateVertices();
         }
 
-        public override Vertex[] GetVertices()
+        public override IVertex[] GetVertices()
         {
             return _vertices;
         }

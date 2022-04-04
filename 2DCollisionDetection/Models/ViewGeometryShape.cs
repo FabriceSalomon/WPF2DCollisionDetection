@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace _2DCollisionLibrary.Models
 {
-    public class ViewGeometryShape
+    public class ViewGeometryShape : IViewGeometryShape
     {
         public string Name { get; set; }
 

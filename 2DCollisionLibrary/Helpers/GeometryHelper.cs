@@ -1,4 +1,5 @@
-﻿using _2DCollisionLibrary.Models;
+﻿using _2DCollisionLibrary.Interfaces;
+using _2DCollisionLibrary.Models;
 using _2DCollisionLibrary.Objects;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace _2DCollisionLibrary.Helpers
 {
     public static class GeometryHelper
     {
-        public static void MoveTo(this IEnumerable<Vertex> vertices, double xPos, double yPos)
+        public static void MoveTo(this IEnumerable<IVertex> vertices, double xPos, double yPos)
         {
             var boundingBox = new BoundingBox();
             boundingBox.UpdateBoundingBox(vertices.ToArray());
@@ -21,7 +22,7 @@ namespace _2DCollisionLibrary.Helpers
                 vertex.Move(xOffset, yOffset);
         }
 
-        public static void Rotate(this IEnumerable<Vertex> vertices, Point transformOrigin, double fromAngle, double toAngle)
+        public static void Rotate(this IEnumerable<IVertex> vertices, Point transformOrigin, double fromAngle, double toAngle)
         {
             var rotateTo = toAngle - fromAngle;
             foreach (var vertex in vertices)
@@ -30,7 +31,7 @@ namespace _2DCollisionLibrary.Helpers
             }
         }
 
-        public static void Scale(this IEnumerable<Vertex> vertices, double xScale, double yScale, double centerX, double centerY)
+        public static void Scale(this IEnumerable<IVertex> vertices, double xScale, double yScale, double centerX, double centerY)
         {
             var boundingBox = new BoundingBox();
             boundingBox.UpdateBoundingBox(vertices.ToArray());

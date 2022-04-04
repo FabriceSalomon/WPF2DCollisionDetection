@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using _2DCollisionLibrary.Interfaces;
 
 namespace _2DCollisionLibrary.Objects
 {
-    public class BoundingBox
+    public class BoundingBox : IBoundingBox
     {
         public Rect Rect { get; set; }
 
@@ -21,17 +22,17 @@ namespace _2DCollisionLibrary.Objects
 
         }
 
-        public BoundingBox(params Vertex[] verticles)
+        public BoundingBox(params IVertex[] verticles)
         {
             UpdateBoundingBox(verticles);
         }
 
-        public void UpdateBoundingBox(params Vertex[] verticles)
+        public void UpdateBoundingBox(params IVertex[] verticles)
         {
             Rect = GetRectFromVerticles(verticles);
         }
 
-        private Rect GetRectFromVerticles(params Vertex[] verticles)
+        private Rect GetRectFromVerticles(params IVertex[] verticles)
         {
             if (verticles == null || verticles.Count() == 0)
                 return GetRect(new Point(), new Point(), new Point(), new Point());

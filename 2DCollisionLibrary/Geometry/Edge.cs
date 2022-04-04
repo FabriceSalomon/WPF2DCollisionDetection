@@ -64,7 +64,7 @@ namespace _2DCollisionLibrary.Geometry
         {
         }
 
-        public override Vertex[] GetVertices()
+        public override IVertex[] GetVertices()
         {
             return _vertices;
         }

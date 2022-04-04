@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using _2DCollisionLibrary.Collision;
+using _2DCollisionLibrary.Interfaces;
 
 namespace _2DCollisionDetection
 {
@@ -33,16 +34,16 @@ namespace _2DCollisionDetection
         //Configure how often to calculate collision maps.
         private readonly int _dragCollisionRefresh = 2;
 
-        private ViewGeometry SelectedViewGeometry { get; set; }
-        private List<ViewGeometry> CollisionMap { get; set; }
+        private IViewGeometry SelectedViewGeometry { get; set; }
+        private List<IViewGeometry> CollisionMap { get; set; }
 
         private double dragDistance = 0;
         public bool isDragging;
         private Point selectPosition;
         private Point refreshPosition;
-        private ViewGeometry CollisionViewGeometry { get; set; }
-        private ViewGeometry CollisionViewGeometry2 { get; set; }
-        private ViewGeometry CollisionViewGeometry3 { get; set; }
+        private IViewGeometry CollisionViewGeometry { get; set; }
+        private IViewGeometry CollisionViewGeometry2 { get; set; }
+        private IViewGeometry CollisionViewGeometry3 { get; set; }
 
         public MainWindow()
         {
@@ -142,20 +143,20 @@ namespace _2DCollisionDetection
 
         private void Window_Loaded(object sender, EventArgs e)
         {
-            CollisionMap = new List<ViewGeometry>();
+            CollisionMap = new List<IViewGeometry>();
 
-            Action<ViewGeometryHolder> onMouseDown = (item) =>
+            Action<IViewGeometryHolder> onMouseDown = (item) =>
             {
                 Shape_MouseDown(item.ViewGeometry, item.Element, (MouseButtonEventArgs)item.MouseEventArgs);
                 DrawBoundingBox("", item.ViewGeometry.Geometry.Rect);
             };
-            Action<ViewGeometryHolder> onMouseUp = (item) =>
+            Action<IViewGeometryHolder> onMouseUp = (item) =>
             {
                 Shape_MouseUp(item.ViewGeometry, item.Element, (MouseButtonEventArgs)item.MouseEventArgs);
                 OutlineEdges(item.ViewGeometry);
                 DrawBoundingBox("", item.ViewGeometry.Geometry.Rect);
             };
-            Action<ViewGeometryHolder> onMouseMove = (item) =>
+            Action<IViewGeometryHolder> onMouseMove = (item) =>
             {
                 Shape_MouseMove(item.ViewGeometry, item.Element, (MouseEventArgs)item.MouseEventArgs);
                 if (isDragging)
@@ -277,7 +278,7 @@ namespace _2DCollisionDetection
             timer.Enabled = true;
         }
 
-        private void OutlineEdges(ViewGeometry viewGeometry)
+        private void OutlineEdges(IViewGeometry viewGeometry)
         {
             foreach (var vertex in viewGeometry.Geometry.Vertices)
             {

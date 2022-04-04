@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _2DCollisionLibrary.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows;
 
 namespace _2DCollisionLibrary.Points
 {
-    public class Line
+    public class Line : ILine
     {
         public Point StartPoint { get; set; }
         public Point EndPoint { get; set; }

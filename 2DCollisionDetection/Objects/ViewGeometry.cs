@@ -10,17 +10,17 @@ using System.Windows.Media;
 
 namespace _2DCollisionDetection.Objects
 {
-    public class ViewGeometry
+    public class ViewGeometry : IViewGeometry
     {
-        public Action<ViewGeometryHolder> MouseUp;
-        public Action<ViewGeometryHolder> MouseDown;
-        public Action<ViewGeometryHolder> MouseMove;
-        public Action<List<ViewGeometry>> CheckCollision;
+        public Action<IViewGeometryHolder> MouseUp { get; set; }
+        public Action<IViewGeometryHolder> MouseDown { get; set; }
+        public Action<IViewGeometryHolder> MouseMove { get; set; }
+        public Action<List<IViewGeometry>> CheckCollision { get; set; }
         public bool ShowBoundingBox { get; set; }
 
-        private List<ViewGeometry> CurrentCollisions { get; set; }
-        private List<ViewGeometry> PreviousCollisions { get; set; }
-        public List<ViewGeometry> CollisionMap { get; set; }
+        public List<IViewGeometry> CurrentCollisions { get; set; }
+        private List<IViewGeometry> PreviousCollisions { get; set; }
+        public List<IViewGeometry> CollisionMap { get; set; }
         public ICollisionManager CollisionManager { get; set; }
         public string Name
         {
@@ -29,25 +29,25 @@ namespace _2DCollisionDetection.Objects
                 return string.Join("", Shapes.Select(p => p.Name));
             }
         }
-        public MultiShape Geometry { get; private set; }
-        public List<ViewGeometryShape> Shapes { get; set; }
+        public IMultiShape Geometry { get; private set; }
+        public List<IViewGeometryShape> Shapes { get; set; }
         private Dictionary<string, Point> ElementRelativePositioning { get; set; }
 
-        public ViewGeometry(List<ViewGeometry> collisionMap, ICollisionManager collisionManager, bool showBoundingBox = false)
+        public ViewGeometry(List<IViewGeometry> collisionMap, ICollisionManager collisionManager, bool showBoundingBox = false)
         {
-            Shapes = new List<ViewGeometryShape>();
+            Shapes = new List<IViewGeometryShape>();
             ElementRelativePositioning = new Dictionary<string, Point>();
             CollisionMap = collisionMap;
             Geometry = new MultiShape(new Vertex[0]);
             CollisionManager = collisionManager;
-            PreviousCollisions = new List<ViewGeometry>();
-            CurrentCollisions = new List<ViewGeometry>();
+            PreviousCollisions = new List<IViewGeometry>();
+            CurrentCollisions = new List<IViewGeometry>();
             ShowBoundingBox = showBoundingBox;
         }
 
         private void RebuildGeometry()
         {
-            List<Vertex> vertexGroups = new List<Vertex>();
+            var vertexGroups = new List<IVertex>();
             foreach (var shape in Shapes)
             {
                 vertexGroups.AddRange(shape.Geometry.Vertices);
@@ -56,9 +56,9 @@ namespace _2DCollisionDetection.Objects
             Geometry.Name = Name;
         }
 
-        public ViewGeometry AddShape(FrameworkElement element, IGeometry geometry)
+        public IViewGeometry AddShape(FrameworkElement element, IGeometry geometry)
         {
-            ViewGeometryShape elementShape = new ViewGeometryShape(element, geometry);
+            var elementShape = new ViewGeometryShape(element, geometry);
             elementShape.Element.PreviewMouseDown += Element_PreviewMouseDown;
             elementShape.Element.PreviewMouseUp += Element_PreviewMouseUp;
             elementShape.Element.PreviewMouseMove += Element_PreviewMouseMove;
@@ -71,7 +71,7 @@ namespace _2DCollisionDetection.Objects
             return this;
         }
 
-        public ViewGeometry RemoveShape(ViewGeometryShape shape)
+        public ViewGeometry RemoveShape(IViewGeometryShape shape)
         {
             Shapes.Remove(shape);
             ElementRelativePositioning = GetElementRelativePosititions(Shapes.Select(p => p.Element).ToArray());
@@ -133,9 +133,9 @@ namespace _2DCollisionDetection.Objects
             return relativePositioning;
         }
 
-        public List<ViewGeometry> OnCheckCollision()
+        public List<IViewGeometry> OnCheckCollision()
         {
-            List<ViewGeometry> collisions = new List<ViewGeometry>();
+            var collisions = new List<IViewGeometry>();
             foreach (var collision in CollisionMap.Where(p => Name != p.Name).ToDictionary(p => p.Geometry, o => o))
             {
                 if (CollisionManager.IsCollision(Geometry, collision.Key))
@@ -172,13 +172,13 @@ namespace _2DCollisionDetection.Objects
 
         public void Move(double xPos, double yPos)
         {
-            ViewGeometryShape movingShape = Shapes.FirstOrDefault();
+            var movingShape = Shapes.FirstOrDefault();
             if (movingShape != null)
             {
                 movingShape.Element.Margin = new Thickness(xPos, yPos, 0, 0);
                 foreach (var shape in Shapes.Where(p => p != movingShape))
                 {
-                    Point offset = ElementRelativePositioning[movingShape.Element.Name + "_" + shape.Element.Name];
+                    var offset = ElementRelativePositioning[movingShape.Element.Name + "_" + shape.Element.Name];
                     shape.Element.Margin = new Thickness(xPos + offset.X, yPos + offset.Y, 0, 0);
                 }
                 RefreshGeometry();

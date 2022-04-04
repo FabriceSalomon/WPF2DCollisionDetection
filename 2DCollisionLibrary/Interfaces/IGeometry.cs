@@ -14,14 +14,14 @@ namespace _2DCollisionLibrary.Interfaces
     {
         string Name { get; set; }
         Point TransformOrigin { get; set; }
-        Position Position { get; set; }
-        Transformation Transformation { get; set; }
+        IPosition Position { get; set; }
+        ITransformation Transformation { get; set; }
         void MoveTo(double xPos, double yPos);
         void MoveOffset(double xOffset, double yOffset);
         void Scale(double xScale, double yScale, double centerX, double centerY);
         void Rotate(double angle);
         Rect Rect { get; set; }
-        Vertex[] Vertices { get; }
+        IVertex[] Vertices { get; }
         void Build();
         void Refresh();
         Action GeometryChanged { get; set; }

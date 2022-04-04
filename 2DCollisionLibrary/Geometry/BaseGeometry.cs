@@ -17,9 +17,9 @@ namespace _2DCollisionLibrary.Geometry
     {
         public string Name { get; set; }
         public Point TransformOrigin { get; set; }
-        public Position Position { get; set; }
-        public Transformation Transformation { get; set; }
-        public Vertex[] Vertices { get; private set; }
+        public IPosition Position { get; set; }
+        public ITransformation Transformation { get; set; }
+        public IVertex[] Vertices { get; private set; }
         public Action GeometryChanged { get; set; }
 
         public BaseGeometry()
@@ -31,7 +31,7 @@ namespace _2DCollisionLibrary.Geometry
             Transformation = new Transformation();
         }
 
-        public abstract Vertex[] GetVertices();
+        public abstract IVertex[] GetVertices();
         public abstract void Refresh();
 
         public void Build()

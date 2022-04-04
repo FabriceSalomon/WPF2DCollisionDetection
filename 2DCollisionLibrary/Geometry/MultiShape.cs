@@ -13,10 +13,10 @@ using System.Windows.Shapes;
 
 namespace _2DCollisionLibrary.Geometry
 {
-    public class MultiShape : BaseGeometry
+    public class MultiShape : BaseGeometry, IMultiShape
     {
         private static int _count;
-        private Vertex[] _vertices;
+        private IVertex[] _vertices;
 
         public MultiShape(Vertex[] vertices)
         {
@@ -26,7 +26,7 @@ namespace _2DCollisionLibrary.Geometry
             UpdateShape(vertices);
         }
 
-        private void CreateShape(Vertex[] vertices)
+        private void CreateShape(IVertex[] vertices)
         {
             _vertices = vertices;
             for (int i = 0; i < _vertices.Length; i++)
@@ -35,7 +35,7 @@ namespace _2DCollisionLibrary.Geometry
             }
         }
 
-        public void UpdateShape(Vertex[] vertices)
+        public void UpdateShape(IVertex[] vertices)
         {
             _vertices = vertices;
             Build();
@@ -45,7 +45,7 @@ namespace _2DCollisionLibrary.Geometry
         {
         }
 
-        public override Vertex[] GetVertices()
+        public override IVertex[] GetVertices()
         {
             return _vertices;
         }

@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using _2DCollisionLibrary.Helpers;
+using _2DCollisionLibrary.Interfaces;
 
 namespace _2DCollisionLibrary.Models
 {
-    public class Vertex
+    public class Vertex : IVertex
     {
         public string Name { get; set; }
         public Position Position { get; set; }
-        public List<VertexConnection> VertexConnections { get; private set; }
+        public List<IVertexConnection> VertexConnections { get; private set; }
 
         public Vertex(Point point)
         {
-            VertexConnections = new List<VertexConnection>();
+            VertexConnections = new List<IVertexConnection>();
             Position = new Position(point);
         }
 

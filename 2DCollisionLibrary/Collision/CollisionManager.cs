@@ -42,9 +42,9 @@ namespace _2DCollisionLibrary.Collision
             return false;
         }
 
-        private List<VertexConnection> CalculateCollidingSides(IGeometry collisionElement, IGeometry collidable, int edgeLimit)
+        private List<IVertexConnection> CalculateCollidingSides(IGeometry collisionElement, IGeometry collidable, int edgeLimit)
         {
-            var collidingSides = new List<VertexConnection>();
+            var collidingSides = new List<IVertexConnection>();
 
             foreach (var vertex in collisionElement.Vertices)
             {
