@@ -29,7 +29,7 @@ namespace _2DCollisionDetection.Objects
                 return string.Join("", Shapes.Select(p => p.Name));
             }
         }
-        public IMultiShape Geometry { get; private set; }
+        public MultiShape Geometry { get; private set; }
         public List<IViewGeometryShape> Shapes { get; set; }
         private Dictionary<string, Point> ElementRelativePositioning { get; set; }
 

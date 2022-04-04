@@ -13,12 +13,12 @@ using System.Windows.Shapes;
 
 namespace _2DCollisionLibrary.Geometry
 {
-    public class MultiShape : BaseGeometry, IMultiShape
+    public class MultiShape : BaseGeometry
     {
         private static int _count;
         private IVertex[] _vertices;
 
-        public MultiShape(Vertex[] vertices)
+        public MultiShape(IVertex[] vertices)
         {
             Name = "Multishape" + _count;
             _count++;

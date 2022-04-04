@@ -62,7 +62,6 @@
     <Compile Include="Interfaces\IGeometryAdapter.cs" />
     <Compile Include="Interfaces\IGeometry.cs" />
     <Compile Include="Interfaces\ILine.cs" />
-    <Compile Include="Interfaces\IMultiShape.cs" />
     <Compile Include="Interfaces\IPosition.cs" />
     <Compile Include="Interfaces\ITransformation.cs" />
     <Compile Include="Interfaces\IVertex.cs" />

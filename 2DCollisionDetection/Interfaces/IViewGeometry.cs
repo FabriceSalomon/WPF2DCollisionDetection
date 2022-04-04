@@ -19,7 +19,7 @@ namespace _2DCollisionLibrary.Interfaces
         List<IViewGeometry> CollisionMap { get; set; }
         ICollisionManager CollisionManager { get; set; }
         string Name { get; }
-        IMultiShape Geometry { get; }
+        MultiShape Geometry { get; }
         List<IViewGeometryShape> Shapes { get; set; }
         List<IViewGeometry> CurrentCollisions { get; set; }
 
