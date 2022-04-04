@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 
 namespace _2DCollisionDetection.CustomAdapters
 {
-    public class GeometryViewAdapter : BaseGeometryAdapter
+    public class GeometryViewAdapter : BaseGeometryAdapter, IGeometryViewAdapter
     {
         public FrameworkElement View { get; private set; }
 

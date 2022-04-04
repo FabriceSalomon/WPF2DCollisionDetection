@@ -54,6 +54,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CustomAdapters\GeometryViewAdapter.cs" />
+    <Compile Include="Interfaces\IGeometryViewAdapter.cs" />
     <Compile Include="Interfaces\IViewGeometry.cs" />
     <Compile Include="Interfaces\IViewGeometryHolder.cs" />
     <Compile Include="Interfaces\IViewGeometryShape.cs" />
