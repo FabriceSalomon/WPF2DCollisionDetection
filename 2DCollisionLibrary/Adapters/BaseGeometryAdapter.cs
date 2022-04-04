@@ -13,14 +13,14 @@ namespace _2DCollisionLibrary.Adapters
     public class BaseGeometryAdapter : IGeometryAdapter
     {
         public string Name { get; set; }
-        public Vertex[] Vertices { get; set; }
+        public IVertex[] Vertices { get; set; }
 
         public BaseGeometryAdapter()
         {
             Vertices = new Vertex[0];
         }
 
-        public BaseGeometryAdapter(string name, params Vertex[] vertices)
+        public BaseGeometryAdapter(string name, params IVertex[] vertices)
         {
             Name = name;
             Vertices = vertices;
@@ -30,7 +30,7 @@ namespace _2DCollisionLibrary.Adapters
         {
         }
 
-        public virtual Vertex[] ConnectVertices(params Vertex[] vertices)
+        public virtual IVertex[] ConnectVertices(params IVertex[] vertices)
         {
             for (int i = 0; i < vertices.Count(); i++)
             {
@@ -43,7 +43,7 @@ namespace _2DCollisionLibrary.Adapters
             return vertices;
         }
 
-        protected Vertex[] ConvertToVertices(params Point[] points)
+        protected IVertex[] ConvertToVertices(params Point[] points)
         {
             var vertices = points.ToList().ConvertAll(p => new Vertex(p)).ToArray();
             return vertices;

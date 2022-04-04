@@ -10,8 +10,8 @@ namespace _2DCollisionLibrary.Interfaces
     public interface IGeometryAdapter
     {
         string Name { get; set; }
-        Vertex[] Vertices { get; set; }
-        Vertex[] ConnectVertices(params Vertex[] vertices);
+        IVertex[] Vertices { get; set; }
+        IVertex[] ConnectVertices(params IVertex[] vertices);
         void UpdateVertices();
     }
 }

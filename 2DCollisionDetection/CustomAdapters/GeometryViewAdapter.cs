@@ -1,4 +1,5 @@
 ﻿using _2DCollisionLibrary.Adapters;
+using _2DCollisionLibrary.Interfaces;
 using _2DCollisionLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace _2DCollisionDetection.CustomAdapters
             Vertices = CreateVertices();
         }
 
-        public Vertex[] CreateVertices()
+        public IVertex[] CreateVertices()
         {
             return ConvertToVertices(GetPoints());
         }

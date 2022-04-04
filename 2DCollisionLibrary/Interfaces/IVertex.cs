@@ -14,10 +14,10 @@ namespace _2DCollisionLibrary.Interfaces
         Position Position { get; set; }
         List<IVertexConnection> VertexConnections { get; }
 
-        Vertex AddConnection(Vertex vertex);
-        Vertex RemoveConnection(Vertex vertex);
+        IVertex AddConnection(IVertex vertex);
+        IVertex RemoveConnection(IVertex vertex);
 
-        Vertex ClearConnections();
+        IVertex ClearConnections();
 
         void Move(double xOffset, double yOffset);
 

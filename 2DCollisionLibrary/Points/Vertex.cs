@@ -22,19 +22,19 @@ namespace _2DCollisionLibrary.Models
             Position = new Position(point);
         }
 
-        public Vertex AddConnection(Vertex vertex)
+        public IVertex AddConnection(IVertex vertex)
         {
             VertexConnections.Add(new VertexConnection(this, vertex));
             return this;
         }
 
-        public Vertex RemoveConnection(Vertex vertex)
+        public IVertex RemoveConnection(IVertex vertex)
         {
             VertexConnections.Remove(VertexConnections.FirstOrDefault(p => p.Vertex1 == vertex || p.Vertex2 == vertex));
             return this;
         }
 
-        public Vertex ClearConnections()
+        public IVertex ClearConnections()
         {
             VertexConnections.Clear();
             return this;
