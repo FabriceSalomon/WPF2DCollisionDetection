@@ -22,6 +22,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using _2DCollisionLibrary.Collision;
 using _2DCollisionLibrary.Interfaces;
+using _2DCollisionLibrary.Factories;
 
 namespace _2DCollisionDetection
 {
@@ -169,35 +170,26 @@ namespace _2DCollisionDetection
             var collisionManager = new CollisionManager(2);
             collisionManager.OnRayLineCreated += DisplayRayLine;
 
-            var viewGeometry1 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctOne, new DynamicShape(new GeometryViewAdapter(rctOne)));
-            viewGeometry1.MouseDown += onMouseDown;
-            viewGeometry1.MouseUp += onMouseUp;
-            viewGeometry1.MouseMove += onMouseMove;
+            IShapeFactory shapeFactory = new DynamicShapeFactory(CollisionMap, collisionManager, onMouseUp, onMouseDown, onMouseMove);
 
-            var viewGeometry2 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctThree, new DynamicShape(new GeometryViewAdapter(rctThree)));
-            viewGeometry2.MouseDown += onMouseDown;
-            viewGeometry2.MouseUp += onMouseUp;
-            viewGeometry2.MouseMove += onMouseMove;
+            var viewGeometry1 = shapeFactory.CreateShape();
+            shapeFactory.AddShape(viewGeometry1, rctOne);
 
-            var viewGeometry3 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctFour, new DynamicShape(new GeometryViewAdapter(rctFour)));
-            viewGeometry3.MouseDown += onMouseDown;
-            viewGeometry3.MouseUp += onMouseUp;
-            viewGeometry3.MouseMove += onMouseMove;
+            var viewGeometry2 = shapeFactory.CreateShape();
+            shapeFactory.AddShape(viewGeometry2, rctThree);
 
-            var viewGeometry4 = new ViewGeometry(CollisionMap, collisionManager).AddShape(polyTriangle, new DynamicShape(new GeometryViewAdapter(polyTriangle)));
-            viewGeometry4.MouseDown += onMouseDown;
-            viewGeometry4.MouseUp += onMouseUp;
-            viewGeometry4.MouseMove += onMouseMove;
+            var viewGeometry3 = shapeFactory.CreateShape();
+            shapeFactory.AddShape(viewGeometry3, rctFour);
 
-            var viewGeometry5 = new ViewGeometry(CollisionMap, collisionManager).AddShape(polyOctagon, new DynamicShape(new GeometryViewAdapter(polyOctagon)));
-            viewGeometry5.MouseDown += onMouseDown;
-            viewGeometry5.MouseUp += onMouseUp;
-            viewGeometry5.MouseMove += onMouseMove;
+            var viewGeometry4 = shapeFactory.CreateShape();
+            shapeFactory.AddShape(viewGeometry4, polyTriangle);
 
-            CollisionViewGeometry = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctTwo, new DynamicShape(new GeometryViewAdapter(rctTwo))).AddShape(txtCollision, new DynamicShape(new GeometryViewAdapter(txtCollision)));
-            CollisionViewGeometry.MouseDown += onMouseDown;
-            CollisionViewGeometry.MouseUp += onMouseUp;
-            CollisionViewGeometry.MouseMove += onMouseMove;
+            var viewGeometry5 = shapeFactory.CreateShape();
+            shapeFactory.AddShape(viewGeometry5, polyOctagon);
+
+            CollisionViewGeometry = shapeFactory.CreateShape();
+            shapeFactory.AddShape(CollisionViewGeometry, rctTwo);
+            shapeFactory.AddShape(CollisionViewGeometry, txtCollision);
             CollisionViewGeometry.CheckCollision += (results) =>
                 {
                     if (results.Count > 0)
@@ -206,10 +198,9 @@ namespace _2DCollisionDetection
                         txtCollision.Text = "No collisions";
                 };
 
-            CollisionViewGeometry2 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctTwo2, new DynamicShape(new GeometryViewAdapter(rctTwo2))).AddShape(txtCollision2, new DynamicShape(new GeometryViewAdapter(txtCollision2)));
-            CollisionViewGeometry2.MouseDown += onMouseDown;
-            CollisionViewGeometry2.MouseUp += onMouseUp;
-            CollisionViewGeometry2.MouseMove += onMouseMove;
+            CollisionViewGeometry2 = shapeFactory.CreateShape();
+            shapeFactory.AddShape(CollisionViewGeometry2, rctTwo2);
+            shapeFactory.AddShape(CollisionViewGeometry2, txtCollision2);
             CollisionViewGeometry2.CheckCollision += (results) =>
                 {
                     if (results.Count > 0)
@@ -218,7 +209,9 @@ namespace _2DCollisionDetection
                         txtCollision2.Text = "No collisions";
                 };
 
-            CollisionViewGeometry3 = new ViewGeometry(CollisionMap, collisionManager).AddShape(rctTwo3, new DynamicShape(new GeometryViewAdapter(rctTwo3))).AddShape(txtCollision3, new DynamicShape(new GeometryViewAdapter(txtCollision3)));
+            CollisionViewGeometry3 = shapeFactory.CreateShape();
+            shapeFactory.AddShape(CollisionViewGeometry3, rctTwo3);
+            shapeFactory.AddShape(CollisionViewGeometry3, txtCollision3);
             CollisionViewGeometry3.MouseDown += (item) => 
             { 
                 Shape_MouseDown(item.ViewGeometry, item.Element, (MouseButtonEventArgs)item.MouseEventArgs);
