@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _2DCollisionLibrary.Models
+namespace _2DCollisionLibrary.Objects
 {
     public class Transformation : ITransformation
     {

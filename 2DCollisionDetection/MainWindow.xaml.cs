@@ -3,7 +3,7 @@ using _2DCollisionDetection.Objects;
 using _2DCollisionLibrary.Adapters;
 using _2DCollisionLibrary.Helpers;
 using _2DCollisionLibrary.Geometry;
-using _2DCollisionLibrary.Models;
+using _2DCollisionLibrary.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

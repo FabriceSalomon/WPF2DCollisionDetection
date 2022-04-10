@@ -1,5 +1,5 @@
 ﻿using _2DCollisionLibrary.Interfaces;
-using _2DCollisionLibrary.Models;
+using _2DCollisionLibrary.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

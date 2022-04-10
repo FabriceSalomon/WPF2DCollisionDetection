@@ -1,4 +1,4 @@
-﻿using _2DCollisionLibrary.Models;
+﻿using _2DCollisionLibrary.Objects;
 using _2DCollisionLibrary.Helpers;
 using System;
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ namespace _2DCollisionLibrary.Objects
         private Rect GetRectFromVerticles(params IVertex[] verticles)
         {
             if (verticles == null || verticles.Count() == 0)
-                return GetRect(new Point(), new Point(), new Point(), new Point());
+                return GetRect();
 
             var Top = verticles.Min(p => p.Position.Y);
             var Bottom = verticles.Max(p => p.Position.Y);
@@ -44,7 +44,7 @@ namespace _2DCollisionLibrary.Objects
             return GetRect(new Point(Left, Top), new Point(Right, Top), new Point(Left, Bottom), new Point(Right, Bottom));
         }
 
-        private static Rect GetRect(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
+        private static Rect GetRect(Point topLeft = new Point(), Point topRight = new Point(), Point bottomLeft = new Point(), Point bottomRight = new Point())
         {
             var minX = Math.Min(Math.Min(topLeft.X, topRight.X), Math.Min(bottomLeft.X, bottomRight.X));
             var minY = Math.Min(Math.Min(topLeft.Y, topRight.Y), Math.Min(bottomLeft.Y, bottomRight.Y));

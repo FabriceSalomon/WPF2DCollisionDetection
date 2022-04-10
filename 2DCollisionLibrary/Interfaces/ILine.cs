@@ -11,5 +11,7 @@ namespace _2DCollisionLibrary.Interfaces
     {
         Point StartPoint { get; set; }
         Point EndPoint { get; set; }
+
+        void Invert();
     }
 }

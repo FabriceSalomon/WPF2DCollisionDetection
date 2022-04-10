@@ -1,5 +1,5 @@
 ﻿using _2DCollisionLibrary.Geometry;
-using _2DCollisionLibrary.Models;
+using _2DCollisionLibrary.Objects;
 using _2DCollisionLibrary.Objects;
 using System;
 using System.Collections.Generic;
@@ -13,9 +13,9 @@ namespace _2DCollisionLibrary.Interfaces
     public interface IGeometry
     {
         string Name { get; set; }
-        Point TransformOrigin { get; set; }
-        IPosition Position { get; set; }
-        ITransformation Transformation { get; set; }
+        Point TransformOrigin { get; }
+        IPosition Position { get; }
+        ITransformation Transformation { get; }
         void MoveTo(double xPos, double yPos);
         void MoveOffset(double xOffset, double yOffset);
         void Scale(double xScale, double yScale, double centerX, double centerY);

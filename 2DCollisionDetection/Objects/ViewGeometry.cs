@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using _2DCollisionLibrary.Geometry;
-using _2DCollisionLibrary.Models;
+using _2DCollisionLibrary.Objects;
 using System.Windows.Media;
 
 namespace _2DCollisionDetection.Objects

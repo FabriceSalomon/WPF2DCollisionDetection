@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using _2DCollisionLibrary.Models;
 using _2DCollisionLibrary.Objects;
 using _2DCollisionLibrary.Adapters;
 
@@ -16,9 +15,9 @@ namespace _2DCollisionLibrary.Geometry
     public abstract class BaseGeometry : BoundingBox, IGeometry
     {
         public string Name { get; set; }
-        public Point TransformOrigin { get; set; }
-        public IPosition Position { get; set; }
-        public ITransformation Transformation { get; set; }
+        public Point TransformOrigin { get; private set; }
+        public IPosition Position { get; private set; }
+        public ITransformation Transformation { get; private set; }
         public IVertex[] Vertices { get; private set; }
         public Action GeometryChanged { get; set; }
 

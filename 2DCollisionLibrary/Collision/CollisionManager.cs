@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using _2DCollisionLibrary.Geometry;
-using _2DCollisionLibrary.Models;
+using _2DCollisionLibrary.Objects;
 using _2DCollisionLibrary.Points;
 
 namespace _2DCollisionLibrary.Collision

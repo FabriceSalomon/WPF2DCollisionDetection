@@ -18,5 +18,12 @@ namespace _2DCollisionLibrary.Points
             StartPoint = startPoint;
             EndPoint = endPoint;
         }
+
+        public void Invert()
+        {
+            var startPointCopy = StartPoint;
+            StartPoint = EndPoint;
+            EndPoint = startPointCopy;
+        }
     }
 }

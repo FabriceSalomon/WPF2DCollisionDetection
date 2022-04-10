@@ -8,7 +8,7 @@ using System.Windows.Media;
 using _2DCollisionLibrary.Helpers;
 using _2DCollisionLibrary.Interfaces;
 
-namespace _2DCollisionLibrary.Models
+namespace _2DCollisionLibrary.Objects
 {
     public class Vertex : IVertex
     {

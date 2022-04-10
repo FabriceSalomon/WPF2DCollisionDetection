@@ -1,6 +1,7 @@
 ﻿using _2DCollisionLibrary.Collision;
 using _2DCollisionLibrary.Geometry;
 using _2DCollisionLibrary.Helpers;
+using _2DCollisionLibrary.Interfaces;
 using _2DCollisionLibrary.Points;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,14 @@ using System.Windows;
 
 namespace _2DCollisionLibrary.Tracers
 {
-    public abstract class BaseTracer
+    public abstract class BaseTracer : ITracer
     {
         public string Name { get; set; }
         public Point StartPoint { get; set; }
         public Point EndPoint { get; set; }
         public Action<Point, Point, CollissionType, string> RayLineCreated { get; set; }
 
-        public Double Distance
+        public double Distance
         {
             get
             {
@@ -28,40 +29,42 @@ namespace _2DCollisionLibrary.Tracers
 
         public abstract bool IsCollision(Line collisionLine);
 
-        protected virtual Point LineIntersectionPoint(Line line1, Line line2)
+        private void GetStaticLine(out ILine staticLine, out ILine collissionLine, params ILine[] lines)
         {
-            var lines = new Line[] { line1, line2 }.OrderByDescending(p => Math.Abs(p.StartPoint.X - p.EndPoint.X)).ToArray();
-            var line = lines[0];
-            var staticLine = lines[1];
-
+            lines = lines.OrderByDescending(p => Math.Abs(p.StartPoint.X - p.EndPoint.X)).ToArray();
+            collissionLine = lines.First();
+            staticLine = lines.Last();
+        }
+        private void ReArrangeLine(ILine line)
+        {
             if (line.EndPoint.X < line.StartPoint.X)
-                line = new Line(line.EndPoint, line.StartPoint);
-            if (staticLine.EndPoint.X < staticLine.StartPoint.X)
-                staticLine = new Line(staticLine.EndPoint, staticLine.StartPoint);
+                line.Invert();
+        }
+        protected virtual Point LineIntersectionPoint(ILine line1, ILine line2)
+        {
+            //For these calculations the longer line is always the static line, and the short one the collission line.
+            GetStaticLine(out ILine collissionLine, out ILine staticLine, line1, line2);
+            ReArrangeLine(collissionLine);
+            ReArrangeLine(staticLine);
 
-            var staticLineOpp = staticLine.EndPoint.Y - staticLine.StartPoint.Y;
-            var staticLineAdj = staticLine.EndPoint.X - staticLine.StartPoint.X;
-            var staticLineAccelerationRate = staticLineOpp / Math.Abs(staticLineAdj);
-
-            var lineOpp = line.EndPoint.Y - line.StartPoint.Y;
-            var lineAdj = line.EndPoint.X - line.StartPoint.X;
-            var lineAccelerationRate = lineOpp / Math.Abs(lineAdj);
+            var staticLineSine = Utility2DMath.CalculateSine(staticLine);
+            var lineSine = Utility2DMath.CalculateSine(collissionLine);
 
             //When the lines have the same xCord we can start comparing how fast the gap between them is closing and where they will collide.
-            var distance = staticLine.StartPoint.X - line.StartPoint.X;
-            var heightDifference = (line.StartPoint.Y + (distance * lineAccelerationRate)) - staticLine.StartPoint.Y;
-            var heightLossRatio = staticLineAccelerationRate - lineAccelerationRate;
+            var distance = staticLine.StartPoint.X - collissionLine.StartPoint.X;
+            var heightDifference = (collissionLine.StartPoint.Y + (distance * lineSine)) - staticLine.StartPoint.Y;
+            var heightLossRatio = staticLineSine - lineSine;
 
             var xIntersectionPoint = staticLine.StartPoint.X + (heightDifference / heightLossRatio);
-            var yIntersectionPoint = line.StartPoint.Y + (((heightDifference / heightLossRatio) + distance) * lineAccelerationRate);
+            var yIntersectionPoint = collissionLine.StartPoint.Y + (((heightDifference / heightLossRatio) + distance) * lineSine);
 
             if (!xIntersectionPoint.ValueInRange(staticLine.StartPoint.X, staticLine.EndPoint.X, 0.2f))
                 return new Point(double.NaN, double.NaN);
             else if (!yIntersectionPoint.ValueInRange(staticLine.StartPoint.Y, staticLine.EndPoint.Y, 0.2f))
                 return new Point(double.NaN, double.NaN);
-            else if (!xIntersectionPoint.ValueInRange(line.StartPoint.X, line.EndPoint.X, 0.2f))
+            else if (!xIntersectionPoint.ValueInRange(collissionLine.StartPoint.X, collissionLine.EndPoint.X, 0.2f))
                 return new Point(double.NaN, double.NaN);
-            else if (!yIntersectionPoint.ValueInRange(line.StartPoint.Y, line.EndPoint.Y, 0.2f))
+            else if (!yIntersectionPoint.ValueInRange(collissionLine.StartPoint.Y, collissionLine.EndPoint.Y, 0.2f))
                 return new Point(double.NaN, double.NaN);
             else
                 return new Point(xIntersectionPoint, yIntersectionPoint);

@@ -1,5 +1,6 @@
 ﻿using _2DCollisionLibrary.Geometry;
-using _2DCollisionLibrary.Models;
+using _2DCollisionLibrary.Interfaces;
+using _2DCollisionLibrary.Objects;
 using _2DCollisionLibrary.Points;
 using System;
 using System.Collections.Generic;
@@ -126,6 +127,19 @@ namespace _2DCollisionLibrary.Helpers
                 return 360 - angle;
 
             return angle;
+        }
+
+        public static double CalculateSine(ILine line)
+        {
+            var lineOpp = line.EndPoint.Y - line.StartPoint.Y;
+            var lineAdj = line.EndPoint.X - line.StartPoint.X;
+            return CalculateSine(lineOpp, lineAdj);
+        }
+
+        public static double CalculateSine(double opposite, double adjacent)
+        {
+            var sine = opposite / Math.Abs(adjacent);
+            return sine;
         }
     }
 }
