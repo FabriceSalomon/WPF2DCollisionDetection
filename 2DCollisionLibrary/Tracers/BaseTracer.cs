@@ -29,13 +29,13 @@ namespace _2DCollisionLibrary.Tracers
 
         public abstract bool IsCollision(Line collisionLine);
 
-        private void GetStaticLine(out ILine staticLine, out ILine collissionLine, params ILine[] lines)
+        private void SortLines(out ILine staticLine, out ILine collissionLine, params ILine[] lines)
         {
             lines = lines.OrderByDescending(p => Math.Abs(p.StartPoint.X - p.EndPoint.X)).ToArray();
             collissionLine = lines.First();
             staticLine = lines.Last();
         }
-        private void ReArrangeLine(ILine line)
+        private void CalibrateLine(ILine line)
         {
             if (line.EndPoint.X < line.StartPoint.X)
                 line.Invert();
@@ -43,9 +43,9 @@ namespace _2DCollisionLibrary.Tracers
         protected virtual Point LineIntersectionPoint(ILine line1, ILine line2)
         {
             //For these calculations the longer line is always the static line, and the short one the collission line.
-            GetStaticLine(out ILine collissionLine, out ILine staticLine, line1, line2);
-            ReArrangeLine(collissionLine);
-            ReArrangeLine(staticLine);
+            SortLines(out ILine collissionLine, out ILine staticLine, line1, line2);
+            CalibrateLine(collissionLine);
+            CalibrateLine(staticLine);
 
             var staticLineSine = Utility2DMath.CalculateSine(staticLine);
             var lineSine = Utility2DMath.CalculateSine(collissionLine);
