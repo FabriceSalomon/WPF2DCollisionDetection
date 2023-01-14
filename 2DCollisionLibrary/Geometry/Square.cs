@@ -22,11 +22,6 @@ namespace _2DCollisionLibrary.Geometry
         public Vertex BottomLeft { get; set; }
         public Vertex BottomRight { get; set; }
 
-        public Square()
-            : this(new Point(), new Point(), new Point(), new Point())
-        {
-        }
-
         public Square(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight)
             : this(new Position(topLeft), new Position(topRight), new Position(bottomLeft), new Position(bottomRight))
         {

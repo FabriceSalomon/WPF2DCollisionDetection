@@ -22,11 +22,6 @@ namespace _2DCollisionLibrary.Geometry
         public Vertex StartPoint { get; set; }
         public Vertex EndPoint { get; set; }
 
-        public Edge()
-            : this(new Point(), new Point())
-        {
-        }
-
         public Edge(Point startPoint, Point endPoint)
             : this(new Position(startPoint), new Position(endPoint))
         {
