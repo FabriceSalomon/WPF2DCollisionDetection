@@ -15,7 +15,6 @@ namespace _2DCollisionLibrary.Geometry
     public class Square : BaseGeometry
     {
         private static int _count;
-        private Vertex[] _vertices;
 
         public Vertex TopLeft { get; set; }
         public Vertex TopRight { get; set; }
@@ -61,17 +60,12 @@ namespace _2DCollisionLibrary.Geometry
             BottomLeft.Position = bottomLeft;
             BottomRight.Position = bottomRight;
 
-            _vertices = new Vertex[] { TopLeft, TopRight, BottomLeft, BottomRight };
+            Vertices = new Vertex[] { TopLeft, TopRight, BottomLeft, BottomRight };
             Build();
         }
 
         public override void Refresh()
         {
-        }
-
-        public override IVertex[] GetVertices()
-        {
-            return _vertices;
         }
     }
 }

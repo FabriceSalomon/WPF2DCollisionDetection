@@ -16,7 +16,6 @@ namespace _2DCollisionLibrary.Geometry
     public class MultiShape : BaseGeometry
     {
         private static int _count;
-        private IVertex[] _vertices;
 
         public MultiShape(IVertex[] vertices)
         {
@@ -28,8 +27,8 @@ namespace _2DCollisionLibrary.Geometry
 
         private void CreateShape(IVertex[] vertices)
         {
-            _vertices = vertices;
-            for (int i = 0; i < _vertices.Length; i++)
+            Vertices = vertices;
+            for (int i = 0; i < Vertices.Length; i++)
             {
                 vertices[i].Name = Name + "p" + i;
             }
@@ -37,17 +36,12 @@ namespace _2DCollisionLibrary.Geometry
 
         public void UpdateShape(IVertex[] vertices)
         {
-            _vertices = vertices;
+            Vertices = vertices;
             Build();
         }
 
         public override void Refresh()
         {
-        }
-
-        public override IVertex[] GetVertices()
-        {
-            return _vertices;
         }
     }
 }
