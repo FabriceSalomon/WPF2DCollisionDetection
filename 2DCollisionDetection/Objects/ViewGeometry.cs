@@ -97,7 +97,7 @@ namespace _2DCollisionDetection.Objects
                 shape.Geometry.Refresh();
             }
             Geometry.Refresh();
-            Geometry.UpdateBoundingBox(Geometry.Vertices);
+            Geometry.UpdateBoundingBox(Geometry.Vertices.ToArray());
         }
 
         private void Element_PreviewMouseUp(object sender, MouseButtonEventArgs e)

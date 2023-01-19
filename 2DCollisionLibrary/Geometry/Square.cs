@@ -60,7 +60,7 @@ namespace _2DCollisionLibrary.Geometry
             BottomLeft.Position = bottomLeft;
             BottomRight.Position = bottomRight;
 
-            Vertices = new Vertex[] { TopLeft, TopRight, BottomLeft, BottomRight };
+            AttatchVerticesToGeometry(new Vertex[] { TopLeft, TopRight, BottomLeft, BottomRight });
             Build();
         }
 

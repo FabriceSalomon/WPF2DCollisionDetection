@@ -19,8 +19,8 @@ namespace _2DCollisionLibrary.Geometry
 
         private void CreateShape(IVertex[] vertices)
         {
-            Vertices = vertices;
-            for (int i = 0; i < Vertices.Length; i++)
+            AttatchVerticesToGeometry(vertices);
+            for (int i = 0; i < GetVertices().Length; i++)
                 vertices[i].Name = Name + "p" + i;
         }
 
@@ -29,7 +29,7 @@ namespace _2DCollisionLibrary.Geometry
             _geometryAdapter = geometryAdapter;
             Name = _geometryAdapter.Name;
             CreateShape(_geometryAdapter.Vertices);
-            _geometryAdapter.ConnectVertices(Vertices);
+            _geometryAdapter.ConnectVertices(GetVertices());
             Build();
         }
 

@@ -49,7 +49,7 @@ namespace _2DCollisionLibrary.Geometry
         {
             StartPoint.Position = startPoint;
             EndPoint.Position = endPoint;
-            Vertices = new Vertex[] { StartPoint, EndPoint };
+            AttatchVerticesToGeometry(new Vertex[] { StartPoint, EndPoint });
             Build();
         }
 

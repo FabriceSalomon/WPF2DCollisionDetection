@@ -21,7 +21,7 @@ namespace _2DCollisionLibrary.Interfaces
         void Scale(double xScale, double yScale, double centerX, double centerY);
         void Rotate(double angle);
         Rect Rect { get; set; }
-        IVertex[] Vertices { get; }
+        List<IVertex> Vertices { get; }
         void Build();
         void Refresh();
         Action GeometryChanged { get; set; }
