@@ -56,6 +56,7 @@
     <Compile Include="Geometry\Square.cs" />
     <Compile Include="Collision\CollisionManager.cs" />
     <Compile Include="Helpers\GeometryHelper.cs" />
+    <Compile Include="Helpers\TriangleHelper.cs" />
     <Compile Include="Helpers\Utility2DMath.cs" />
     <Compile Include="Interfaces\ITracer.cs" />
     <Compile Include="Interfaces\IBoundingBox.cs" />

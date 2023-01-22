@@ -47,14 +47,12 @@ namespace _2DCollisionLibrary.Objects
 
         public void Rotate(Point origin, double angle)
         {
-            var hyppLenght = origin.Distance(Position.Point);
-            var hyppAngle = origin.CalculateAngleDifference(Position.Point);
+            var invert = Position.X < 0 ? -1 : 1;
+            var targetHyppAngle = angle;
+            var targetHyppLenght = origin.Distance(Position.Point) * invert;
+            var triangulate = new TriangleHelper(null, targetHyppLenght, null, targetHyppAngle, origin);
 
-            var targetHyppAngle = hyppAngle + angle;
-            var targetOppLenght = Math.Cos(Utility2DMath.ToRadians(90 - targetHyppAngle)) * hyppLenght;
-            var targetAdjLenght = Math.Tan(Utility2DMath.ToRadians(90 - targetHyppAngle)) * targetOppLenght;
-
-            Position.Point = new Point(origin.X - targetAdjLenght, origin.Y - targetOppLenght);
+            Position.Point = new Position(triangulate.AdjacentLenght, triangulate.OppositeLenght).Point;
         }
     }
 }
