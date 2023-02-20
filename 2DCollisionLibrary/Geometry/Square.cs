@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using _2DCollisionLibrary.Adapters;
 
 namespace _2DCollisionLibrary.Geometry
 {

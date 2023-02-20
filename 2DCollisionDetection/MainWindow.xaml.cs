@@ -267,6 +267,7 @@ namespace _2DCollisionDetection
             Shape_MouseMove(item.ViewGeometry, item.Element, (MouseEventArgs)item.MouseEventArgs);
             if (isDragging)
             {
+                OutlineEdges(item.ViewGeometry);
                 DrawBoundingBox("", item.ViewGeometry.Geometry.Rect);
             }
         }

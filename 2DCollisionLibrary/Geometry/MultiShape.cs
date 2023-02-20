@@ -1,5 +1,4 @@
-﻿using _2DCollisionLibrary.Adapters;
-using _2DCollisionLibrary.Helpers;
+﻿using _2DCollisionLibrary.Helpers;
 using _2DCollisionLibrary.Interfaces;
 using _2DCollisionLibrary.Objects;
 using System;

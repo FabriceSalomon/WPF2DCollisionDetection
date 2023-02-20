@@ -22,24 +22,10 @@ namespace _2DCollisionDetection.CustomAdapters
             Name = view.Name;
             View = view;
 
-            Vertices = CreateVertices();
+            Vertices = ConvertToVertices(GetPoints());
         }
 
-        public IVertex[] CreateVertices()
-        {
-            return ConvertToVertices(GetPoints());
-        }
-
-        public override void UpdateVertices()
-        {
-            var points = GetPoints();
-            for (int i = 0; i < Vertices.Length; i++)
-            {
-                Vertices[i].Position.Point = points[i];
-            }
-        }
-
-        public Point[] GetPoints()
+        public override Point[] GetPoints()
         {
             if (View is Polygon)
                 return GetPointsFromPoly((Polygon)View);

@@ -10,7 +10,6 @@ namespace _2DCollisionLibrary.Interfaces
     public interface IGeometryViewAdapter
     {
         FrameworkElement View { get; }
-        IVertex[] CreateVertices();
 
         void UpdateVertices();
 

@@ -68,7 +68,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CustomAdapters\GeometryViewAdapter.cs" />
+    <Compile Include="Adapters\BaseGeometryAdapter.cs" />
+    <Compile Include="Adapters\GeometryViewAdapter.cs" />
     <Compile Include="Interfaces\IShapeFactory.cs" />
     <Compile Include="Objects\DynamicShapeFactory.cs" />
     <Compile Include="Objects\ShapeFactory.cs" />

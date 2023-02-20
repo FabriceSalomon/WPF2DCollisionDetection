@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace _2DCollisionLibrary.Adapters
 {
-    public class BaseGeometryAdapter : IGeometryAdapter
+    public abstract class BaseGeometryAdapter : IGeometryAdapter
     {
         public string Name { get; set; }
         public IVertex[] Vertices { get; set; }
@@ -28,8 +28,15 @@ namespace _2DCollisionLibrary.Adapters
 
         public virtual void UpdateVertices()
         {
+            var points = GetPoints();
+            for (int i = 0; i < Vertices.Length; i++)
+            {
+                Vertices[i].Position.Point = points[i];
+            }
         }
 
+        public abstract Point[] GetPoints();
+        
         public virtual IVertex[] ConnectVertices(params IVertex[] vertices)
         {
             for (int i = 0; i < vertices.Count(); i++)
