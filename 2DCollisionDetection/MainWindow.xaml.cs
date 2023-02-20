@@ -168,7 +168,7 @@ namespace _2DCollisionDetection
             };
 
             var collisionManager = new CollisionManager(2);
-            collisionManager.OnRayLineCreated += DisplayRayLine;
+            collisionManager.OnRayLineCreated += DrawLine;
 
             IShapeFactory shapeFactory = new DynamicShapeFactory(CollisionMap, collisionManager, onMouseUp, onMouseDown, onMouseMove);
 
@@ -277,20 +277,20 @@ namespace _2DCollisionDetection
             {
                 foreach (var connection in vertex.VertexConnections)
                 {
-                    DisplayRayLine(connection.Vertex1.Position.Point, connection.Vertex2.Position.Point, CollissionType.TraceLine, connection.Name);
+                    DrawLine(connection.Vertex1.Position.Point, connection.Vertex2.Position.Point, CollissionType.TraceLine, connection.Name);
                 }
             }
         }
 
         private void DrawBoundingBox(string id, Rect boundingBox)
         {
-            DisplayRayLine(boundingBox.TopLeft, boundingBox.TopRight, CollissionType.BoundingBox, "top" + id);
-            DisplayRayLine(boundingBox.TopRight, boundingBox.BottomRight, CollissionType.BoundingBox, "right" + id);
-            DisplayRayLine(boundingBox.BottomLeft, boundingBox.BottomRight, CollissionType.BoundingBox, "bottom" + id);
-            DisplayRayLine(boundingBox.BottomLeft, boundingBox.TopLeft, CollissionType.BoundingBox, "left" + id);
+            DrawLine(boundingBox.TopLeft, boundingBox.TopRight, CollissionType.BoundingBox, "top" + id);
+            DrawLine(boundingBox.TopRight, boundingBox.BottomRight, CollissionType.BoundingBox, "right" + id);
+            DrawLine(boundingBox.BottomLeft, boundingBox.BottomRight, CollissionType.BoundingBox, "bottom" + id);
+            DrawLine(boundingBox.BottomLeft, boundingBox.TopLeft, CollissionType.BoundingBox, "left" + id);
         }
 
-        private void DisplayRayLine(Point point1, Point point2, CollissionType type, string name)
+        private void DrawLine(Point point1, Point point2, CollissionType type, string name)
         {
             if (type == CollissionType.XYLine)
             {
