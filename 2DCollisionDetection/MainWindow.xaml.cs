@@ -310,8 +310,8 @@ namespace _2DCollisionDetection
             {
                 line1 = new Line();
                 grdHolder.Children.Add(line1);
+                line1.Name = name + type;
             }
-            line1.Name = name + type;
             line1.X1 = point1.X;
             line1.Y1 = point1.Y;
             line1.X2 = point2.X;
